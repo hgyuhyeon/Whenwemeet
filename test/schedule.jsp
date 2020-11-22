@@ -28,7 +28,7 @@ Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 		Class.forName("com.mysql.jdbc.Driver");
 		String url="jdbc:mysql://localhost/testdb";
 		Connection conn = DriverManager.getConnection(url, "user", "1234");
-		Statement state = conn.CreateStatement();
+		Statement state = conn.createStatement();
 		
 		String sql = "SELECT * FROM testtable WHERE name = 'testname'";
 		ResultSet rs = state.executeQuery(sql);
@@ -79,9 +79,8 @@ Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 				else
 					out.print("□ ");
 				}
-			} %>
-		</p>
-			<%
+			} 
+		%></p><%
 		}
 		rs.close();
 		state.close();
