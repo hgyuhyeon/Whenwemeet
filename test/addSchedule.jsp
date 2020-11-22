@@ -13,3 +13,13 @@ Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 	<%
 	request.setCharacterEncoding("UTF-8");
 	%>
+	<body>
+		<form action='updateSchedule.jsp'>
+			요일: <input id='day' type='text' />
+			<br>
+			시간: <input id='start' type='text'/> 시 부터 <input id='end' type='text'/>시 까지
+			<br>
+			<input type='submit' value='적용' />
+		</form>
+	</body>
+</html>
