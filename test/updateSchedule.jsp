@@ -12,8 +12,8 @@ Statement state = conn.createStatement();
 
 <html>
 	<head>
-		<meta http-equiv="Content-Type"
-		content="text/html; charset=UTF-8">
+		<meta http-equiv="refresh"
+		content="0; url=http://118.67.132.180:8080/test/schedule.jsp">
 		<title>conrirming...</title>
 	</head>
 	<%
