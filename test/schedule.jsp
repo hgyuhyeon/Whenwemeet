@@ -42,7 +42,7 @@ Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 			<%
 		}
 		%>
-		<button type="button" onclick="location.href = '#'">일정 추가</button>
+		<button type="button" onclick="location.href = 'addSchedule.jsp'">일정 추가</button>
 	</body>
 </html>
 
