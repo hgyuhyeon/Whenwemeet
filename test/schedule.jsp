@@ -27,11 +27,11 @@ Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 		<%
 		Class.forName("com.mysql.jdbc.Driver");
 		String url="jdbc:mysql://localhost/testdb";
-		Connection conn = DriverManager.getConnection(url, root, wwm1023*);
-		state = conn.CreateStatement();
+		Connection conn = DriverManager.getConnection(url, "user", "1234");
+		Statement state = conn.CreateStatement();
 		
-		String sql = "SELECT * INTO testtable WHERE name = 'testname'";
-		Resultset rs = state.executeQuery(sql);
+		String sql = "SELECT * FROM testtable WHERE name = 'testname'";
+		ResultSet rs = state.executeQuery(sql);
 		
 		//각 일정별로 미리 칸 채워서 출력
 		Table tb = new Table();
@@ -39,9 +39,9 @@ Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 		while(rs.next()){
 			String weekday = rs.getString("weekday");
-			int starttime = rs.getString("starttime");
-			int endtime = rs.getString("endtime");
-			switch(day) {
+			int starttime = Integer.parseInt(rs.getString("starttime"));
+			int endtime = Integer.parseInt(rs.getString("endtime"));
+			switch(weekday) {
 			case "월":
 				daynum = 0;
 				break;
@@ -66,24 +66,21 @@ Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 			default:
 				break;
 			}
-			for(int i=starttime;i<endtime;i++)
+			for(int i=starttime; i<endtime; i++)
 				tb.isFIll[i][daynum] = 1;
 		}
 		
 		for (int i=0;i<24;i++) { %>
-		<h2>
+		<p>
 			<% out.print(i+"시");
 			for(int j=0;j<7;j++) {
-				if(query == null)
+				if(tb.isFill[i][j] == 1)
+					out.print("■ ");
+				else
 					out.print("□ ");
-				else {
-					if(tb.isFill[i][j] == 1)
-						out.print("■ ");
-					else
-						out.print("□ ");
 				}
 			} %>
-		</h2>
+		</p>
 			<%
 		}
 		rs.close();
