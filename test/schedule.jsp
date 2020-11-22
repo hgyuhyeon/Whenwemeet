@@ -67,7 +67,7 @@ Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 				break;
 			}
 			for(int i=starttime; i<endtime; i++)
-				tb.isFIll[i][daynum] = 1;
+				tb.isFill[i][daynum] = 1;
 		}
 		
 		for (int i=0;i<24;i++) { %>
@@ -78,7 +78,6 @@ Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 					out.print("■ ");
 				else
 					out.print("□ ");
-				}
 			} 
 		%></p><%
 		}
