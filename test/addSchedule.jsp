@@ -14,7 +14,7 @@ Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 	request.setCharacterEncoding("UTF-8");
 	%>
 	<body>
-		<form action="updateSchedule.jsp?name=multipart" method="get" enctype="multipart/form-data">
+		<form action="updateaddSchedule.jsp" method="get">
 			<label>요일: </label><input name="day" type="text" />
 			<br>
 			<label>시간: </label><input name="start" type="text"/> 시 부터 <input name="end" type="text"/>시 까지
