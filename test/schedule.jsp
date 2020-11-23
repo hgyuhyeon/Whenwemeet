@@ -23,7 +23,7 @@ Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 	<body>
 		<h1>   *주간 일정*</h1>
 		<hr/>
-		<h2>&nbsp;&nbsp;&nbsp; 월 화 수 목 금 토 일</h2>
+		<p>입력된 일정 정보</p>
 		<%
 		Class.forName("com.mysql.jdbc.Driver");
 		String url="jdbc:mysql://localhost/testdb";
@@ -69,24 +69,26 @@ Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 			for (int i = starttime; i < endtime; i++){
 				tb.isFill[i][daynum] = 1;
 	 		}
+			out.println(weekday+": "+starttime+"시부터 "+endtime+"시까지");
 	 	}
-		
+		%><hr/><%
 		rs.close();
 		state.close();
 		conn.close();
-
+		%><p>&nbsp;&nbsp;&nbsp; 월 화 수 목 금 토 일</p><%
 	 	for (int i=0;i<24;i++) {
 	 		%><p><%
 			out.print(i+"시");
 			for(int j=0;j<7;j++) {
 				if(tb.isFill[i][j] == 1)
-					out.print("■ ");
+					out.print(" ■");
 				else
-					out.print("□ ");
+					out.print(" □");
 			}
 		%></p><%
 		}
 		%>
 		<button type="button" onclick="location.href = 'addSchedule.jsp'">일정 추가</button>
+		<button type="button" onclick="location.href = 'deleteSchedule.jsp'">일정 삭제</button>
 	</body>
 </html>
