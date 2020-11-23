@@ -31,8 +31,8 @@ Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 	while(rs.next()){
 		String weekday = rs.getString("weekday");
-		int starttime = Integer.parseInt(rs.getString("starttime");
-		int endtime = Integer.parseInt(rs.getString("endtime");
+		int starttime = Integer.parseInt(rs.getString("starttime"));
+		int endtime = Integer.parseInt(rs.getString("endtime"));
 		switch(weekday){
 		case "월":
 			daynum = 0;
@@ -90,8 +90,8 @@ Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 		
 		//1
 		dstart = Integer.parseInt(request.getParameter("start"));
-		dend = Integer.parseInt(request.getParameter("end");
-                if(dtart!=null&&dend!=null){
+		dend = Integer.parseInt(request.getParameter("end"));
+                if(dstart!=null&&dend!=null){ //error: int cannot insert null
 			if(dstart>dend){
 				for(int i=dstart; i<24;i++)
 					for(int j=0;j<7;j++)
@@ -107,14 +107,14 @@ Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
                 }
 
 		//2
-		time = Integer.parseInt(request.getParameter("time");
-                if(time == null)
+		time = Integer.parseInt(request.getParameter("time"));
+                if(time == null) //error: int cannot insert null
                         time = 0;
 		
 		//output
 		int start = -1;
 		for (int i=0;i<24;i++) //시간 체크
-			for(int j=0;j<7;j++) //요일별로
+			for(int j=0;j<7;j++) {//요일별로
 				if(tb.isFill[i][j] !=0){
 					start = -1; //reset starting point
 					continue; //빈 시간이 아니라 걸러진 시간이면 패스
@@ -133,6 +133,8 @@ Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 							out.println(weeks[i-1]+"요일 "+start+"시~ "+weeks[i]+"요일 "+k+"시");
 						else
 							out.println(weeks[i]+"요일 "+start+"시~ "+weeks[i]+"요일 "+k+"시"); //해당 시간도 사용하므로 1시간 높여(k = j+1) 출력
+					}
+			}
 		%>
 	</body>
 </html>
