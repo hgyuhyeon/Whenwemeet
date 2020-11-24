@@ -66,9 +66,7 @@ Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 			for (int i = starttime; i < endtime; i++){
 				tb.isFill[i][daynum] = 1;
 	 		}
-	 	%><br><%
 	 	}
-		%><hr/><%
 		rs.close();
 		state.close();
 		conn.close();
@@ -80,12 +78,10 @@ Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
     		<%
     		//for weeks print & variable initialize
     		String [] weeks = {"월", "화", "수", "목", "금", "토", "일"};
-    		Integer dstart, dend; //for 1: do not disturb
-    		Integer time = 0; //for 2: mininum spending time
     
     		//1
-    		dstart = Integer.parseInt(start);
-    		dend = Integer.parseInt(end);
+    		Integer dstart = Integer.parseInt(request.getParameter("start"));
+    		Integer dend = Integer.parseInt(request.getParameter("end"));
     		if(dstart!=null&&dend!=null){ 
     			if(dstart>dend){
             			for(int i=dstart; i<24;i++)
@@ -102,7 +98,7 @@ Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
     		}
     
 		//2
-    		time = Integer.parseInt(request.getParameter("time"));
+    		Integer time = Integer.parseInt(request.getParameter("time"));
     		if(time == null)
     			time = 0;
     		%>				
@@ -111,26 +107,32 @@ Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 		<%
 		//output
 		int start = -1;
-		for (int i=0;i<24;i++) //시간 체크
-			for(int j=0;j<7;j++) {//요일별로
-				if(tb.isFill[i][j] !=0){
+		for (int i=0;i<7;i++) //요일별로
+			for(int j=0;j<24;j++) {//시간 체크
+				if(tb.isFill[j][i] !=0){
 					start = -1; //reset starting point
 					continue; //빈 시간이 아니라 걸러진 시간이면 패스
 				}
 				if(start == -1)
 					start = j; //set starting point
 				int k = j+1;
-				if(k ==24)
+				if(k == 24)
 					k = 0; //날짜 변경 시 시간 변경
 				if(tb.isFill[k][i] != 0)
 					if(j-start < time){
 						start = -1;
 						continue; //최소 시간을 만족하지 못하면 패스
 					} else {
-						if(start>k) //익일로 넘어간 시간이면
-							out.println(weeks[i-1]+"요일 "+start+"시~ "+weeks[i]+"요일 "+k+"시");
-						else
-							out.println(weeks[i]+"요일 "+start+"시~ "+weeks[i]+"요일 "+k+"시"); //해당 시간도 사용하므로 1시간 높여(k = j+1) 출력
+					%><p><%
+						if(start>k){ //익일로 넘어간 시간이면
+							out.print(weeks[i-1]+"요일 "+start+"시~ "+weeks[i]+"요일 "+k+"시");
+							%><br><%
+						}
+						else {
+							out.print(weeks[i]+"요일 "+start+"시~ "+weeks[i]+"요일 "+k+"시"); //해당 시간도 사용하므로 1시간 높여(k = j+1) 출력
+							%><br><%
+						}
+					%></p><%
 					}
 			}
 		%>
