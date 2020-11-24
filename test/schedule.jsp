@@ -111,37 +111,45 @@ Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 		</form>
 		
 		<script>
-		function inquire(){
-		<%
-		//for weeks print
-		String [] weeks = {"월", "화", "수", "목", "금", "토", "일"};
-                Integer dstart, dend; //for 1: do not disturb
-                Integer time = 0; //for 2: mininum spending time
+		function inquire() {
+			<%
+			//for weeks print & variable initialize
+                	String [] weeks = {"월", "화", "수", "목", "금", "토", "일"};
+        	        Integer dstart, dend; //for 1: do not disturb
+  	              	Integer time = 0; //for 2: mininum spending time
+			%>
 
-
-		//1
-		dstart = Integer.parseInt(request.getParameter("start"));
-		dend = Integer.parseInt(request.getParameter("end"));
-                if(dstart!=null&&dend!=null){ //error: int cannot insert null
-			if(dstart>dend){
-				for(int i=dstart; i<24;i++)
-					for(int j=0;j<7;j++)
-						tb.isFill[i][j] = 2;
-				for(int i = 0;i<dend;i++)
-					for(int j=0;j<7;j++)
-						tb.isFill[i][j] = 2;
-			} else {
-				for(int i=dstart; i<dend; i++)
-					for(int j=0;j<7;j++)
-						tb.isFill[i][j] = 2;
+			if(document.getElementByld("start").value != ""){
+		                <%
+				//1
+               			dstart = Integer.parseInt(request.getParameter("start"));
+               			dend = Integer.parseInt(request.getParameter("end"));
+               			if(dstart!=null&&dend!=null){ 
+				        if(dstart>dend){
+                                		for(int i=dstart; i<24;i++)
+                                		        for(int j=0;j<7;j++)
+                                                		tb.isFill[i][j] = 2;
+                                		for(int i = 0;i<dend;i++)
+                                        		for(int j=0;j<7;j++)
+                                         		        tb.isFill[i][j] = 2;
+                        		} else {
+                                		for(int i=dstart; i<dend; i++)
+                                 	 	       for(int j=0;j<7;j++)
+                                                		tb.isFill[i][j] = 2;
+                        		}	
+                		}
+				%>
 			}
-                }
-
-		//2
-		time = Integer.parseInt(request.getParameter("time"));
-                if(time == null) //error: int cannot insert null
-                        time = 0;
-		
+			
+			if(document.getElementByld("time").value != ""){
+				<%
+		                //2
+        		        time = Integer.parseInt(request.getParameter("time"));
+	        		        if(time == null)
+                        			time = 0;
+				%>	
+			}	
+		<%
 		//output
 		int start = -1;
 		for (int i=0;i<24;i++) //시간 체크
