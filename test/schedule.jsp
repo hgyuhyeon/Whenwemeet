@@ -70,6 +70,7 @@ Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 				tb.isFill[i][daynum] = 1;
 	 		}
 			out.println(weekday+": "+starttime+"시부터 "+endtime+"시까지");
+	 	%><br><%
 	 	}
 		%><hr/><%
 		rs.close();
@@ -90,30 +91,34 @@ Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 		%>
 		<button type="button" onclick="location.href = 'addSchedule.jsp'">일정 추가</button>
 		<button type="button" onclick="location.href = 'deleteSchedule.jsp'">일정 삭제</button>
+		<!-- 빈 시간 조회하기  -->
 		<h1> *빈 시간 조회*</h1>
 		<hr/>
 		<p>필터</p>
-		<%
-		int dstart, dend; //for 1: do not disturb
-		int time = 0; //for 2: mininum spending time
-		%>
 		1. do not disturb(체크 시 폼 나타나야 함)
 		<form>
 			<input name="start" type="text" />시부터
 			<input name="end" type="text" />시 까지<br>
-			<input type="submit" value="적용" />
+                        <input type="button" value="적용" onclick="inquire()">
+
 		</form>
 		<!--관건: 적용 버튼 누르면 같은 페이지의 하단에 결과가 나타나야 함 -->
 		<br>
 		2. 필요한 최소 시간(1번과 동일한 형태로 결과 display)
 		<form>
 			최소 <input name="time" type="text"/>시간
-			<input type="submit" value="적용" />
+			<input type="button" value="적용" onclick="inquire()">
 		</form>
+		
+		<script>
+		function inquire(){
 		<%
 		//for weeks print
 		String [] weeks = {"월", "화", "수", "목", "금", "토", "일"};
-		
+                Integer dstart, dend; //for 1: do not disturb
+                Integer time = 0; //for 2: mininum spending time
+
+
 		//1
 		dstart = Integer.parseInt(request.getParameter("start"));
 		dend = Integer.parseInt(request.getParameter("end"));
@@ -161,6 +166,8 @@ Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 							out.println(weeks[i]+"요일 "+start+"시~ "+weeks[i]+"요일 "+k+"시"); //해당 시간도 사용하므로 1시간 높여(k = j+1) 출력
 					}
 			}
-		%>	
+		%>
+		}
+		</script>
 	</body>
 </html>
