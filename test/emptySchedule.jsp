@@ -72,65 +72,70 @@ Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 		rs.close();
 		state.close();
 		conn.close();
+		%>
 		<!-- 빈 시간 조회하기  -->
 		<h1> *빈 시간 조회*</h1>
 		<hr/>
     <%
-	  //for weeks print & variable initialize
+    //for weeks print & variable initialize
     String [] weeks = {"월", "화", "수", "목", "금", "토", "일"};
     Integer dstart, dend; //for 1: do not disturb
-  	Integer time = 0; //for 2: mininum spending time
-	  %>
+    Integer time = 0; //for 2: mininum spending time
+    %>
 		<p>필터</p>
 		1. do not disturb(체크 시 폼 나타나야 함)
 		<form>
 			<input name="start" type="text" />시부터
 			<input name="end" type="text" />시 까지<br>
-      <input type="button" value="적용" onclick="act1()" />
 		</form>
-		<!--관건: 적용 버튼 누르면 같은 페이지의 하단에 결과가 나타나야 함 -->
+		<button onclick="act1()">적용</button>
 		<br>
 		2. 필요한 최소 시간(1번과 동일한 형태로 결과 display)
 		<form>
 			최소 <input name="time" type="text"/>시간
-			<input type="button" value="적용" onclick="act2()">
 		</form>
-		
+		<button onclick="act2()">적용</button>
 		<script>
 		function act1() {
-			if(document.getElementByld("start").value != ""){
-		    <%
-				//1
-        dstart = Integer.parseInt(request.getParameter("start"));
-        dend = Integer.parseInt(request.getParameter("end"));
-        if(dstart!=null&&dend!=null){ 
-				  if(dstart>dend){
-            for(int i=dstart; i<24;i++)
-                for(int j=0;j<7;j++)
-                   	tb.isFill[i][j] = 2;
-            for(int i = 0;i<dend;i++)
-             		for(int j=0;j<7;j++)
-         		        tb.isFill[i][j] = 2;
-          } else {
-            for(int i=dstart; i<dend; i++)
-                for(int j=0;j<7;j++)
-                 		tb.isFill[i][j] = 2;
-       		}	
-        }
-		    %>
-			}
+	  		if(document.getElementById("start").value!=""){
+	  			var start = document.getElementById("start");
+	  			var end = document.getElementById("end");
+	  		}		
+			<%
+			//1
+	  		dstart = Integer.parseInt(start);
+	  		dend = Integer.parseInt(end);
+			if(dstart!=null&&dend!=null){ 
+				if(dstart>dend){
+            				for(int i=dstart; i<24;i++)
+            					for(int j=0;j<7;j++)
+                   					tb.isFill[i][j] = 2;
+            				for(int i = 0;i<dend;i++)
+             					for(int j=0;j<7;j++)
+         		        			tb.isFill[i][j] = 2;
+          			} else {
+            				for(int i=dstart; i<dend; i++)
+                				for(int j=0;j<7;j++)
+                 					tb.isFill[i][j] = 2;
+       				}	
+        		}
+		    	%>
 		}
-    function act2() {
-			if(document.getElementByld("time").value != ""){
-			  <%
-		    //2
-        time = Integer.parseInt(request.getParameter("time"));
-	      if(time == null)
-          time = 0;
-				%>	
-		  }
-    }
-    </script>
+		</script>
+		<script>
+    		function act2() {
+			if(document.getElementById("time").value!=""){
+				<%
+		    		//2
+        			time = Integer.parseInt(request.getParameter("time"));
+	      			if(time == null)
+          				time = 0;
+			%>
+	  		}
+		}
+   		</script>					
+		<hr/>
+		<p>이용 가능한 시간</p>
 		<%
 		//output
 		int start = -1;
