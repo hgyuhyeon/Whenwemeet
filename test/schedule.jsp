@@ -91,5 +91,6 @@ Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 		%>
 		<button type="button" onclick="location.href = 'addSchedule.jsp'">일정 추가</button>
 		<button type="button" onclick="location.href = 'deleteSchedule.jsp'">일정 삭제</button>
+		<button type="button" onclick="location.href = 'Schedule.jsp'">빈 시간 조회</button>	
 	</body>
 </html>
