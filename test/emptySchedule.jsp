@@ -76,64 +76,36 @@ Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 		<!-- 빈 시간 조회하기  -->
 		<h1> *빈 시간 조회*</h1>
 		<hr/>
-    <%
-    //for weeks print & variable initialize
-    String [] weeks = {"월", "화", "수", "목", "금", "토", "일"};
-    Integer dstart, dend; //for 1: do not disturb
-    Integer time = 0; //for 2: mininum spending time
-    %>
-		<p>필터</p>
-		1. do not disturb(체크 시 폼 나타나야 함)
-		<form>
-			<input name="start" type="text" />시부터
-			<input name="end" type="text" />시 까지<br>
-		</form>
-		<button onclick="act1()">적용</button>
-		<br>
-		2. 필요한 최소 시간(1번과 동일한 형태로 결과 display)
-		<form>
-			최소 <input name="time" type="text"/>시간
-		</form>
-		<button onclick="act2()">적용</button>
-		<script>
-		function act1() {
-	  		if(document.getElementById("start").value!=""){
-	  			var start = document.getElementById("start");
-	  			var end = document.getElementById("end");
-	  		}		
-			<%
-			//1
-	  		dstart = Integer.parseInt(start);
-	  		dend = Integer.parseInt(end);
-			if(dstart!=null&&dend!=null){ 
-				if(dstart>dend){
-            				for(int i=dstart; i<24;i++)
-            					for(int j=0;j<7;j++)
-                   					tb.isFill[i][j] = 2;
-            				for(int i = 0;i<dend;i++)
-             					for(int j=0;j<7;j++)
-         		        			tb.isFill[i][j] = 2;
-          			} else {
-            				for(int i=dstart; i<dend; i++)
-                				for(int j=0;j<7;j++)
-                 					tb.isFill[i][j] = 2;
-       				}	
-        		}
-		    	%>
-		}
-		</script>
-		<script>
-    		function act2() {
-			if(document.getElementById("time").value!=""){
-				<%
-		    		//2
-        			time = Integer.parseInt(request.getParameter("time"));
-	      			if(time == null)
-          				time = 0;
-			%>
-	  		}
-		}
-   		</script>					
+		<button type="button" onclick="location.href = 'filter.jsp'">필터</button>
+    		<%
+    		//for weeks print & variable initialize
+    		String [] weeks = {"월", "화", "수", "목", "금", "토", "일"};
+    		Integer dstart, dend; //for 1: do not disturb
+    		Integer time = 0; //for 2: mininum spending time
+    
+    		//1
+    		dstart = Integer.parseInt(start);
+    		dend = Integer.parseInt(end);
+    		if(dstart!=null&&dend!=null){ 
+    			if(dstart>dend){
+            			for(int i=dstart; i<24;i++)
+            				for(int j=0;j<7;j++)
+						tb.isFill[i][j] = 2;
+            			for(int i = 0;i<dend;i++)
+             				for(int j=0;j<7;j++)
+       						tb.isFill[i][j] = 2;
+        		} else {
+            			for(int i=dstart; i<dend; i++)
+             				for(int j=0;j<7;j++)
+   						tb.isFill[i][j] = 2;
+       			}
+    		}
+    
+		//2
+    		time = Integer.parseInt(request.getParameter("time"));
+    		if(time == null)
+    			time = 0;
+    		%>				
 		<hr/>
 		<p>이용 가능한 시간</p>
 		<%
@@ -149,7 +121,7 @@ Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 					start = j; //set starting point
 				int k = j+1;
 				if(k ==24)
-					k = 0; //날짜 변겨 시 시간 변경
+					k = 0; //날짜 변경 시 시간 변경
 				if(tb.isFill[k][i] != 0)
 					if(j-start < time){
 						start = -1;
