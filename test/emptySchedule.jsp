@@ -104,40 +104,54 @@ Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 		String tm = request.getParameter("time")==""?"0":request.getParameter("time"); //temp
     		Integer time = Integer.parseInt(tm);
     		if(time == null)
-    			time = 0;
+    			time = 1;
     		%>				
 		<hr/>
 		<p>이용 가능한 시간</p>
 		<%
 		//output
-		int start = -1;
+		int start = -1; //time starting point
+		int value = 0; //time values
 		for (int i=0;i<7;i++) //요일별로
 			for(int j=0;j<24;j++) {//시간 체크
 				if(tb.isFill[j][i] !=0){
 					start = -1; //reset starting point
 					continue; //빈 시간이 아니라 걸러진 시간이면 패스
 				}
-				if(start == -1)
+				if(start == -1) {
 					start = j; //set starting point
-				int k = j+1;
-				if(k == 24)
-					k = 0; //날짜 변경 시 시간 변경
-				if(tb.isFill[k][i] != 0)
-					if(j-start < time){
+					value = 0; //reset value
+				}		
+                                int timetemp = j+1; //익일로 넘어갈 때 시간
+				int daytemp = i; //익일 날짜 set
+				
+				if(timetemp > 23) { //시간 범위 초과 시
+                                        timetemp = 0; //0시로 초기화
+					daytemp +=1; //시간이 바뀌니 날짜도 변경
+					if(daytemp > 6) //날짜 범위 초과 시
+						daytemp = 0; //월요일로 초기화
+				}
+
+				if(tb.isFill[timetemp][daytemp] != 0||(j==23&&i==6))
+					if(value < time){
 						start = -1;
 						continue; //최소 시간을 만족하지 못하면 패스
 					} else {
 					%><p><%
-						if(start>k){ //익일로 넘어간 시간이면
-							out.print(weeks[i-1]+"요일 "+start+"시~ "+weeks[i]+"요일 "+k+"시");
+						if(start>j){ //익일로 넘어간 시간이면
+							out.print(weeks[i-1]+"요일 "+start+"시~ "+weeks[i]+"요일 "+timetemp+"시");
 							%><br><%
 						}
+						else if(j==23&&i==6) {
+							out.print(weeks[i]+"요일 "+start+"시~ "+weeks[daytemp]+"요일 "+timetemp+"시"); //마지막 일정 처리, 실제 달력 들어가면 삭제해도 되는 조건
+						}
 						else {
-							out.print(weeks[i]+"요일 "+start+"시~ "+weeks[i]+"요일 "+k+"시"); //해당 시간도 사용하므로 1시간 높여(k = j+1) 출력
+							out.print(weeks[i]+"요일 "+start+"시~ "+weeks[i]+"요일 "+timetemp+"시"); //해당 시간도 사용하므로 1시간 높여(k = j+1) 출력
 							%><br><%
 						}
 					%></p><%
 					}
+				value++;
 			}
 		%>
 		<button type="button" onclick="location.href='schedule.jsp'">처음으로</button>
