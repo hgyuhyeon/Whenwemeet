@@ -80,8 +80,11 @@ Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
     		String [] weeks = {"월", "화", "수", "목", "금", "토", "일"};
     
     		//1
-    		Integer dstart = Integer.parseInt(request.getParameter("start"));
-    		Integer dend = Integer.parseInt(request.getParameter("end"));
+		String st, en; //temp
+		st = request.getParameter("start")==""?"0":request.getParameter("start");
+		en = request.getParameter("end")==""?"0":request.getParameter("end");
+		Integer dstart = Integer.parseInt(st);
+    		Integer dend = Integer.parseInt(en);
     		if(dstart!=null&&dend!=null){ 
     			if(dstart>dend){
             			for(int i=dstart; i<24;i++)
@@ -98,7 +101,8 @@ Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
     		}
     
 		//2
-    		Integer time = Integer.parseInt(request.getParameter("time"));
+		String tm = request.getParameter("time")==""?"0":request.getParameter("time"); //temp
+    		Integer time = Integer.parseInt(tm);
     		if(time == null)
     			time = 0;
     		%>				
@@ -136,5 +140,6 @@ Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 					}
 			}
 		%>
+		<button type="button" onclick="location.href='schedule.jsp'">처음으로</button>
 	</body>
 </html>
