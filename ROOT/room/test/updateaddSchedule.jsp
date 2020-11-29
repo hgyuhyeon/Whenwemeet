@@ -7,7 +7,7 @@ Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 	<head>
 		<meta http-equiv="refresh"
-	    	content="0; url=http://118.67.132.180:8080/test/schedule.jsp">
+	    	content="0; url=http://118.67.132.180:8080/room/test">
 	    	<title>conrirming...</title>
 	</head>
 	<body>
