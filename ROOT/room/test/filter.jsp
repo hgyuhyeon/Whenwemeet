@@ -19,7 +19,7 @@ Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 			<input name="end" type="text" />시 까지<br>
 		<br><br>
 		2. 필요한 최소 시간<br>
-		<form action="schedule.jsp" method="get">
+		<form action="emptySchedule.jsp" method="get">
 			최소 <input name="time" type="text"/>시간<br>
                         <input type="submit" value="적용" />
 		</form>

@@ -154,6 +154,6 @@ Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 				value++;
 			}
 		%>
-		<button type="button" onclick="location.href='schedule.jsp'">처음으로</button>
+		<button type="button" onclick="location.href='index.jsp'">처음으로</button>
 	</body>
 </html>

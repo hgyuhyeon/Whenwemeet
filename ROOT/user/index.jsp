@@ -13,18 +13,23 @@ Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 	<%
 	request.setCharacterEncoding("UTF-8");
 	Class.forName("com.mysql.jdbc.Driver");
-	String url="jdbc:mysql://localhost/testdb";
+	String url="jdbc:mysql://localhost/wwm";
 	Connection conn = DriverManager.getConnection(url, "user", "1234");
 	Statement state = conn.createStatement();
 	%>
 	<body>
 	Whenwewillmeet-for user
 	<%
-        String sql = "SELECT * FROM testtable WHERE name = 'testname'";
+        String sql = "SELECT * FROM user WHERE mainuser = 'testuser'";
         ResultSet rs = state.executeQuery(sql);
-	
+	%>
+	<p>testuser's rooms</p>
+	<hr/>
+	<%
 	while(rs.next()){
-		
+		String roomid = rs.getString("roomid");
+		String roomname = rs.getString("roomname");
+		%><p><%out.println(roomid);%>: <a href="room/roomid"><%out.println(roomname);%></a></p><%
 	}
 	%>
 	
