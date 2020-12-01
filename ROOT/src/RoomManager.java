@@ -22,15 +22,18 @@ public class RoomManager {
 		//
 		
 		//디렉터리, 파일 생성하여 그곳의 index 파일에 이동
-		String original = "/var/lib/tomcat8/webapps/ROOT/src/roominfo.jsp";
-		File oriroominfo = new File(original);
+		//새 room 디렉터리 생성
 		String path = "/var/lib/tomcat8/webapps/ROOT/room/"+str+"/index.jsp";
 		File roominfo = new File(path);
-		roominfo.createNewFile();
+		roominfo.createNewFile(); //생성
+		
 		//파일 복사
+		String index = "/var/lib/tomcat8/webapps/ROOT/doc/roominfo.jsp";
+		File oriroominfo = new File(index);
 		Files.copy(oriroominfo.toPath(), roominfo.toPath(), StandardCopyOption.REPLACE_EXISTING);
+
 		//파일 내용 수정
-		/* 이곳에 원본 파일 sql문 찾아서 mainuser부분 이름을 바꿔야함*/
+		/* 이곳에 원본 파일 sql문 찾아서 mainuser부분 이름을 바꿔야함 */
 		
 		//room 정보 insert
 		Class.forName("com.mysql.jdbc.Driver");
