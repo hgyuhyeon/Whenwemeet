@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class UserManager {
-	public void makeUser(String userid, String userpw) throws ClassNotFoundException, SQLException, IOException {
+	public void makeUserdir(String userid, String userpw) throws ClassNotFoundException, SQLException, IOException {
 		//유저 생성
 		
 		//유저 디렉토리 생성, index 파일 생성
@@ -36,27 +36,7 @@ public class UserManager {
     	state.close();
     	conn.close();
 	}
-	public boolean comfirmUser(String userid, String userpw) throws ClassNotFoundException, SQLException {
-		//로그인 시 유저 정보 확인
-		Class.forName("com.mysql.jdbc.Driver");
-		Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/testdb", "user", "1234");
-		Statement state = conn.createStatement();
-		
-		String sql = "SELECT * FROM user WHERE id='"+userid+"' AND pw='"+userpw+"';";
-    	ResultSet rs = state.executeQuery(sql);
-    	
-    	state.close();
-    	conn.close();
-    	
-    	if(rs.next()) {
-    		rs.close();
-    		return true;
-    	} else {
-    		rs.close();
-    		return false;
-    	}
-	}
-	public void delUser(String userid) throws ClassNotFoundException, SQLException {
+	public void delUserdir(String userid) throws ClassNotFoundException, SQLException {
 		//유저 삭제(회원탈퇴 시)
 		
 		String path = "/var/lib/tomcat8/webapps/ROOT/user/"+userid;
