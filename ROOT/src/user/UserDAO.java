@@ -51,19 +51,20 @@ public class UserDAO { //dao란 데이터베이스 접근 객체 Data Access Obj
 		} 
 		return -1; //데이터베이스 오류
 	}
-	public int get(String userID) {
+	public int getList(String userID) {
 		String SQL = "SELECT * FROM ROOMLIST WHERE userID = ?";
 		try {
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, userID);
-			return rs = pstmt.executeQuery();
+			rs = pstmt.executeQuery();
+			return rs;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return -1; //데이터베이스 오류
 	}	
 	public int del(String userID, String userPassword) { 
-		int result = -2;
+		//int result = -2;
 		String SQL = "SELECT userPassword FROM USER WHERE userID = ?";
 		try { 
 			pstmt = conn.prepareStatement(SQL); 
@@ -71,6 +72,13 @@ public class UserDAO { //dao란 데이터베이스 접근 객체 Data Access Obj
 			rs = pstmt.executeQuery(); 
 			if(rs.next()) { 
 				if(rs.getString(1).equals(userPassword)) {
+					String isroomexist="SELECT * FROM ROOMLIST WHERE userID = ?";
+					pstmt = conn.prepareStatement(isroomexist);
+					pstmt.setString(1, userID);
+					rs = pstmt.executeQuery();
+					if(rs.next())
+						return = -1; //탈퇴 실패, 방을 모두 삭제해야 함
+					
 					String delsql="DELETE FROM USER WHERE userID = ?";
 					pstmt =conn.prepareStatement(delsql);
 					pstmt.setString(1, userID);
@@ -78,14 +86,14 @@ public class UserDAO { //dao란 데이터베이스 접근 객체 Data Access Obj
 					rs.close();
 					pstmt.close();
 					conn.close();
-					result = 1; //탈퇴 성공 
+					return 1; //탈퇴 성공 
 				}
 				else 
-					result = 0; //비밀번호 오류 
+					return 0; //비밀번호 오류 
 			}  
 		} catch (Exception e) { 
 			e.printStackTrace(); 
 		} 
-		return result; // 데이터베이스 오류 
+		return -2; // 데이터베이스 오류 
 		}
 }
