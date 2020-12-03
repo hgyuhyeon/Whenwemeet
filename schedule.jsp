@@ -84,7 +84,7 @@ Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 		        <a class="nav-link" href="#">When we meet</a>
 		      </li>
 		      <li class="nav-item active">
-		        <a class="nav-link" href="#">메인<span class="sr-only">(current)</span></a>
+		        <a class="nav-link" href="#">main.jsp<span class="sr-only">(current)</span></a>
 		      </li>
 		      <li class="nav-item">
 		        <a class="nav-link" href="#">게시판</a>
@@ -101,7 +101,7 @@ Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 		<h1 class="display-4">상세 일정</h1><br /> 
 		<p style="color: gray;">입력된 일정 정보</p>  <!-- jinseo:회색으로 -->
 		<%
-		/*
+		/* db때문에 주석처리 함
 		Class.forName("com.mysql.jdbc.Driver");
 		String url="jdbc:mysql://localhost/testdb";
 		Connection conn = DriverManager.getConnection(url, "user", "1234");
@@ -149,24 +149,35 @@ Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 			}
 			for (int i = starttime; i < endtime; i++){
 				tb.isFill[i][daynum] = 1;
-	 		} 
+	 		} /* db채우기 */
 	 	%>
 	 		<p class="margin"><font size="4"><%=starttime %>시부터 <%=endtime %>시까지</font></p>
+	 		<!-- 특정 날짜의 상세 일정 시간 목록을 나타내고 싶은데 아직 test db에는 요일, 시작시간,끝시간 정보만 있는 것 같아서 제대로 구현 못했어 이부분 수정부탂!! -->
 	    <%
 	 	    k=k-1; //jinseo:테스트용이므로 없애도 돼
 	      }
 	    %>
-	 	<%
+	 	<%  //jinseo:db때문에 잠시 주석처리 함
 		//rs.close();
 		//state.close();
 		//conn.close();
+		%> 
+		
+		<%  /* calender.jsp의 버튼으로부터 전송된 연,월,일 값 전달받은 부분 */
+			int year=Integer.parseInt(request.getParameter("years"));
+			int month=Integer.parseInt(request.getParameter("months"));
+			int day=Integer.parseInt(request.getParameter("days"));
+			/* jinseo:이부분 이용해서 db에서 변수year, month, day값에 일치하는 부분 가져와서
+			   table 객체(?)에 넣어보고, table.isFill 해서 1이면 분홍색 박스 출력하려고 했어(아래 table부분 보면 알아)
+			*/
 		%>
 		<div class="container">
 			<table class="table table-bordered">
 				<thead>
 					<tr>
-						<th scope="col" style="width: 50%">시간 / 일정</th>
-						<th scope="col">일정</th>
+						<th scope="col" style="width: 50%; font-weight: 300">시간/일</th>
+						<th scope="col">일</th>
+						<!-- 그냥 일 말고 3일, 15일 처럼 특정 날짜 일수 나타내고 싶은데 위와 같은 이유로 제대로 구현 못했어 수정부탁!! -->
 					</tr>
 				<thead>
 				<tbody>
@@ -175,6 +186,7 @@ Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 						<th scope="row"><%=i%>시</th>
 						<%if(tb.isFill[i][daynum]==1){%>
 							<td style="background-color: rgb(255, 119, 142)"> </td>
+							<!-- jinseo:그런데 사실특정 월, 일의 특정 시간에 일정이 있으면 찐분홍색으로 칠할려고 했는데 이부분 역시 위와 같은 이유로...ㅎㅎ 수정부탁해!! -->
 						<%} else{ %>
 							<td></td>
 						<%} %>
@@ -183,6 +195,7 @@ Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 				</tbody>
 			</table>
 				<center>
+					<button type="button" class="btn btn-primary" onclick="location.href = 'calender.jsp'">캘린더로</button>
 					<button type="button" class="btn btn-primary" onclick="location.href = 'addSchedule.jsp'">일정 추가</button>
 					<button type="button" class="btn btn-primary" onclick="location.href = 'deleteSchedule.jsp'">일정 삭제</button>
 					<button type="button" class="btn btn-primary" onclick="location.href = 'filter.jsp'">빈 시간 조회</button>
