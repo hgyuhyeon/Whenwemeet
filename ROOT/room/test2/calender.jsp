@@ -1,24 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.sql.*" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <html>
-
-
-
-
-<!-- 여기에 db 연결하는 부분 넣으면 될 것 같아! -->
-
-
-
-
-
-
-
-
-
-
-
 <style type="text/css">
 body{
 background-color: #FFF4F7;
@@ -151,11 +136,11 @@ background-color: #FFF4F7;
    <td>
    <%=i%>
    <!-- 이부분은 버튼 누르면 연, 월, 일 정보 보내는 부분이야! -->
-   <form action="schedule.jsp" method="get">
+   <form action="detail.jsp" method="get">
    		<input type="hidden" name="years" value="<%=year%>">
    		<input type="hidden" name="months" value="<%=month%>">
    		<input type="hidden" name="days" value="<%=i%>">
-   		<button type="submit" class="btn btn-primary" onclick="location.href='schedule.jsp'"></button>
+   		<button type="submit" class="btn btn-primary" onclick="location.href='detail.jsp'"></button>
    </form>
    </td>
    <%

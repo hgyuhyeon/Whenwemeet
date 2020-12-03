@@ -43,6 +43,29 @@ public class ScheduleManager {
 		} 
 		return null; //데이터베이스 오류
 	}
+	public Object getDaySchedule(String roomID, String year, String month, String day) {
+		String sql = "SELECT * FROM SCHEDULE WHERE roomID=? "
+				+ "AND year=? AND month=? AND day=?;";
+		try { 
+			pstmt = conn.prepareStatement(sql); 
+			pstmt.setString(1, roomID); 
+			return pstmt.executeQuery(); //return 1;
+		}catch (Exception e) {
+				e.printStackTrace(); 
+		} 
+		return 0; //데이터베이스 오류
+	}
+	public ResultSet getEntireSchedule(String roomID) {
+		String sql = "SELECT * FROM SCHEDULE WHERE roomID=?;";
+		try { 
+			pstmt = conn.prepareStatement(sql); 
+			pstmt.setString(1, roomID); 
+			return pstmt.executeQuery(); //return 1;
+		}catch (Exception e) {
+				e.printStackTrace(); 
+		} 
+		return null; //데이터베이스 오류
+	}
 	public int deleteSchedule(String roomID, String year, String month, String day, String startTime, String endTime) {		
 		String sql = "DELETE FROM SCHEDULE WHERE roomID=? "
 				+ "AND year=? AND month=? AND day=?"

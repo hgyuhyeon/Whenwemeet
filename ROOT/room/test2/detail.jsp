@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="java.sql.*" %>
-<%@ page import="Table.Table" %>
+<%@ page import="room.ScheduleManager" %>
 <!-- jinseo:open source bootstrap 사용 -->
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01
@@ -95,49 +95,31 @@ Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 		<h1 class="display-4">상세 일정</h1><br /> 
 		<p style="color: gray;">입력된 일정 정보</p>  <!-- jinseo:회색으로 -->
 		<%
-		Class.forName("com.mysql.cj.jdbc.Driver");
-		String url="jdbc:mysql://localhost/wwm";
-		Connection conn = DriverManager.getConnection(url, "user", "1234");
-		Statement state = conn.createStatement();
-		
-		String sql = "SELECT * FROM SCHEDULE WHERE roomID = 'test2'";
-		ResultSet rs = state.executeQuery(sql);
+		int [] tb = new int[24]; //table 대신 사용
+		ScheduleManager smanager = new ScheduleManager();
+                String url = (String)session.getAttribute("roomID");
+                String[] res = url.split("/");
+                String roomID = res[2];
+		String syear = request.getParameter("year");
+		String smonth = request.getParameter("month");
+		String sday = request.getParameter("day");
+		ResultSet rs = smanager.getSchedule(roomID, syear, smonth, sday);
 		
 		//각 일정별로 미리 칸 채워서 출력
-		Table tb = new Table();
-		int daynum = 0;
-		
-		int k=3;
 		while(rs.next()){
-	                int year=Integer.parseInt(request.getParameter("year"));
-                        int month=Integer.parseInt(request.getParameter("month"));
-                        int day=Integer.parseInt(request.getParameter("day"));
-			int starttime = Integer.parseInt(rs.getString("startTime");
+	                int starttime = Integer.parseInt(rs.getString("startTime"));
 			int endtime = Integer.parseInt(rs.getString("endTime"));
 			for (int i = starttime; i < endtime; i++){
-				tb.isFill[i][daynum] = 1;
+				tb[i] = 1;
 	 		} /* db채우기 */
 	 	%>
 	 		<p class="margin"><font size="4"><%=starttime %>시부터 <%=endtime %>시까지</font></p>
-	 		<!-- 특정 날짜의 상세 일정 시간 목록을 나타내고 싶은데 아직 test db에는 요일, 시작시간,끝시간 정보만 있는 것 같아서 제대로 구현 못했어 이부분 수정부탂!! 
-	 			 아니면 그냥 지워도 되고!! 밑에 table 있으니까 -->
 	    <%
 	      }
+	      rs.close();
 	    %>
-	 	<%
-		rs.close();
-		state.close();
-		conn.close();
-		%> 
 		
-		<%  /* calender.jsp의 버튼으로부터 전송된 연,월,일 값 전달받은 부분 */
-			int year=Integer.parseInt(request.getParameter("year"));
-			int month=Integer.parseInt(request.getParameter("month"));
-			int day=Integer.parseInt(request.getParameter("day"));
-			/* jinseo:이부분 이용해서 db에서 변수year, month, day값에 일치하는 부분 가져와서
-			   table 객체(?)에 넣어보고, table.isFill 해서 1이면 분홍색 박스 출력하려고 했어(아래 table부분 보면 알아)
-			*/
-		%>
+	    <!-- calender.jsp의 버튼으로부터 전송된 연,월,일 값 전달받은 부분-->
 		<div class="container">
 			<table class="table table-bordered">
 				<thead>
@@ -151,7 +133,7 @@ Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 					<% for (int i=0;i<24;i++) { %>
 					<tr style="width: 20em;">
 						<th scope="row"><%=i%>시</th>
-						<%if(tb.isFill[i][daynum]==1){%>
+						<%if(tb[i]==1){%>
 							<td style="background-color: rgb(255, 119, 142)"> </td>
 							<!-- jinseo:그런데 사실특정 월, 일의 특정 시간에 일정이 있으면 찐분홍색으로 칠할려고 했는데 이부분 역시 위와 같은 이유로...ㅎㅎ 수정부탁해!! -->
 						<%} else{ %>
