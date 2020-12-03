@@ -83,11 +83,11 @@ Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 		      <li class="nav-item">
 		        <a class="nav-link" href="#">When we meet</a>
 		      </li>
-		      <li class="nav-item active">
-		        <a class="nav-link" href="#">main.jsp<span class="sr-only">(current)</span></a>
+		      <li class="nav-item">
+		        <a class="nav-link" href="main.jsp">메인</a>
 		      </li>
 		      <li class="nav-item">
-		        <a class="nav-link" href="#">게시판</a>
+		        <a class="nav-link" href="calender.jsp">캘린더</a>
 		      </li>
 		    </ul>
 		</nav>		
@@ -152,7 +152,8 @@ Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 	 		} /* db채우기 */
 	 	%>
 	 		<p class="margin"><font size="4"><%=starttime %>시부터 <%=endtime %>시까지</font></p>
-	 		<!-- 특정 날짜의 상세 일정 시간 목록을 나타내고 싶은데 아직 test db에는 요일, 시작시간,끝시간 정보만 있는 것 같아서 제대로 구현 못했어 이부분 수정부탂!! -->
+	 		<!-- 특정 날짜의 상세 일정 시간 목록을 나타내고 싶은데 아직 test db에는 요일, 시작시간,끝시간 정보만 있는 것 같아서 제대로 구현 못했어 이부분 수정부탂!! 
+	 			 아니면 그냥 지워도 되고!! 밑에 table 있으니까 -->
 	    <%
 	 	    k=k-1; //jinseo:테스트용이므로 없애도 돼
 	      }
@@ -195,7 +196,6 @@ Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 				</tbody>
 			</table>
 				<center>
-					<button type="button" class="btn btn-primary" onclick="location.href = 'calender.jsp'">캘린더로</button>
 					<button type="button" class="btn btn-primary" onclick="location.href = 'addSchedule.jsp'">일정 추가</button>
 					<button type="button" class="btn btn-primary" onclick="location.href = 'deleteSchedule.jsp'">일정 삭제</button>
 					<button type="button" class="btn btn-primary" onclick="location.href = 'filter.jsp'">빈 시간 조회</button>

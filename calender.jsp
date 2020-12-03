@@ -64,15 +64,15 @@ background-color: #FFF4F7;
  </head>
  <body>
  <nav class="navbar navbar-expand-lg bg-light navbar-light">
-			<ul class="navbar-nav">
+			<ul class="navbar-nav" style="text-align: left;">
 		      <li class="nav-item">
 		        <a class="nav-link" href="#">When we meet</a>
 		      </li>
 		      <li class="nav-item">
-		        <a class="nav-link" href="schedule.jsp">메인</a>
+		        <a class="nav-link" href="main.jsp">메인</a>
 		      </li>
-		      <li class="nav-item">
-		        <a class="nav-link" href="#">게시판</a>
+		      <li class="nav-item active">
+		        <a class="nav-link" href="#">캘린더</a>
 		      </li>
 		    </ul>
 		</nav>		
