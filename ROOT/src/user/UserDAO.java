@@ -51,7 +51,17 @@ public class UserDAO { //dao란 데이터베이스 접근 객체 Data Access Obj
 		} 
 		return -1; //데이터베이스 오류
 	}
-	
+	public int get(String userID) {
+		String SQL = "SELECT * FROM ROOMLIST WHERE userID = ?";
+		try {
+			pstmt = conn.prepareStatement(SQL);
+			pstmt.setString(1, userID);
+			return rs = pstmt.executeQuery();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return -1; //데이터베이스 오류
+	}	
 	public int del(String userID, String userPassword) { 
 		int result = -2;
 		String SQL = "SELECT userPassword FROM USER WHERE userID = ?";
