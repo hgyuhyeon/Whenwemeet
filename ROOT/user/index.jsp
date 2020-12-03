@@ -12,7 +12,7 @@ Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 	</head>
 	<%
 	request.setCharacterEncoding("UTF-8");
-	Class.forName("com.mysql.jdbc.Driver");
+	Class.forName("com.mysql.cj.jdbc.Driver");
 	String url="jdbc:mysql://localhost/wwm";
 	Connection conn = DriverManager.getConnection(url, "user", "1234");
 	Statement state = conn.createStatement();
@@ -20,7 +20,7 @@ Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 	<body>
 	Whenwewillmeet-for user
 	<%
-        String sql = "SELECT * FROM user WHERE mainuser = 'testuser'";
+        String sql = "SELECT * FROM USER WHERE userID = 'testuser'";
         ResultSet rs = state.executeQuery(sql);
 	%>
 	<p>testuser's rooms</p>

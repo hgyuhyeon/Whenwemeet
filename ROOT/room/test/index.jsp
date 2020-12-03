@@ -25,7 +25,7 @@ Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 		<hr/>
 		<p>입력된 일정 정보</p>
 		<%
-		Class.forName("com.mysql.jdbc.Driver");
+		Class.forName("com.mysql.cj.jdbc.Driver");
 		String url="jdbc:mysql://localhost/testdb";
 		Connection conn = DriverManager.getConnection(url, "user", "1234");
 		Statement state = conn.createStatement();
