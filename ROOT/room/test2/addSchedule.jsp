@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 pageEncoding="UTF-8"%>
-<%@ page import="java.sql.*" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="java.util.List" %>
+<%@ page import="room.ScheduleManager" %>
+<%@ page import="room.Schedule" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01
 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -67,23 +70,25 @@ Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 		</p>
 		<br /><p style="color:gray;">일정 목록</p>
 		<%
- 		Class.forName("com.mysql.cj.jdbc.Driver");
-		String url="jdbc:mysql://localhost/wwm";
-		Connection conn = DriverManager.getConnection(url, "user", "1234");
-		Statement state = conn.createStatement();
-		String sql = "SELECT * FROM SCHEDULE WHERE roomID = 'test2'";
-		ResultSet rs = state.executeQuery(sql);
+		ScheduleManager smanager = new ScheduleManager();
+		List<Schedule> sdules = new ArrayList<Schedule>();
+		String url = (String)session.getAttribute("roomID");
+		String[] res = url.split("/");
+		String roomID = res[2];
+		sdules = smanager.getEntireSchedule(roomID);
+		if(sdules.size()!=0)
+			for(int i=0;i<sdules.size();i++) {
+				Schedule sdule = new Schedule();
+				sdule = sdules.get(i);
+				String year = sdule.getYear();
+				String month = sdule.getMonth();
+				String day = sdule.getDay();
+				String starttime = sdule.getStartTime();
+				String endtime = sdule.getEndTime();
 		%>
-		<form action="updateaddSchedule.jsp" method="get">
+		<p><class="margin"><%=year%>년 <%=month%>월 <%=day%>일  <%=starttime%>시~<%=endtime%>시 </p>
 			<%
-			while(rs.next()){
-				String weekday = "0";//rs.getString("weekday");
-				int starttime = 0;//Integer.parseInt(rs.getString("starttime"));
-				int endtime = 0;//Integer.parseInt(rs.getString("endtime"));
-			%>
-				<p class="margin"><%=weekday%>, <%=starttime%>시~<%=endtime%>시 </p>
-			<%
-				}
+			}
 			%>
 			<hr/>
 		<div class="container">
