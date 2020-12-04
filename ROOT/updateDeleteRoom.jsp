@@ -2,24 +2,24 @@
 pageEncoding="UTF-8"%>
 <%@ page import="room.RoomManager" %>
 <%@ page import="java.io.PrintWriter" %>
-<jsp:useBean id="user" class="user.User" scope="page" /> 
-<jsp:setProperty name="user" property="userID" /> 
+<jsp:useBean id="room" class="room.Room" scope="page" />
+<jsp:setProperty name="room" property="roomID" />
 <!DOCTYPE html>
 <html>
 	<head>
 		<meta http-equiv="Content-Type"
 	    	content="text/html; charset=UTF-8">
-	    	<title>confirming...</title>
+	    	<title>conrirming...</title>
 	</head>
 	<body>
    	 	<%
     		RoomManager rmanager = new RoomManager();
-		String userID = (String)session.getAttribute("userID");
+		String roomID = (String)session.getAttribute("roomID");
 		String roomName = request.getParameter("roomname");
 		int result = -2;
 		if ( userID != null && roomName != null) {
 			out.println(user);
-			result = rmanager.makeRoom(userID, roomName);
+			result = rmanager.delRoom(userID, roomName);
 		}
 		if (result == 1) {
 			PrintWriter script = response.getWriter();
@@ -32,20 +32,9 @@ pageEncoding="UTF-8"%>
 			script.println("alert('DB오류')");
 			script.println("history.back()");
 			script.println("</script>");
-		} else if (result == 0) {
-			PrintWriter script = response.getWriter();
-			script.println("<script>");
-			script.println("alert('파일 생성 오류')");
-			script.println("history.back()");
-			script.println("</script>");
-		} else if (result == -2) {
-			PrintWriter script = response.getWriter();
-                        script.println("<script>");
-                        script.println("alert('디렉터리 생성 오류')");
-                        script.println("history.back()");
-                        script.println("</script>");
 		}
 		%>
 	</body>
 </html>
+
 
