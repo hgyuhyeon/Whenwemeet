@@ -14,25 +14,16 @@ pageEncoding="UTF-8"%>
 	<body>
    	 	<%
     		RoomManager rmanager = new RoomManager();
-		String roomID = (String)session.getAttribute("roomID");
-		String roomName = request.getParameter("roomname");
+		//String roomID = (String)session.getAttribute("roomID");
+		String roomID = request.getParameter("roomid");
 		int result = -2;
-		if ( userID != null && roomName != null) {
-			out.println(user);
-			result = rmanager.delRoom(userID, roomName);
+		if ( roomID != null ) {
+			result = rmanager.delRoom(roomID);
 		}
-		if (result == 1) {
 			PrintWriter script = response.getWriter();
 			script.println("<script>");
 			script.println("location.href = 'index.jsp'");
 			script.println("</script>");
-		} else if( result==-1){
-			PrintWriter script = response.getWriter();
-			script.println("<script>");
-			script.println("alert('DB오류')");
-			script.println("history.back()");
-			script.println("</script>");
-		}
 		%>
 	</body>
 </html>

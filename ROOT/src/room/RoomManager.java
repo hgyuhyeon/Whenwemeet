@@ -113,37 +113,26 @@ public class RoomManager {
 	    }
 		return rooms;
 	}
-	public int delRoom(String roomID) {
-		String path = "/var/lib/tomcat8/webapps/ROOT/room/"+roomID;
-		File folder = new File(path);
-		while(folder.exists()) { //디렉터리와 파일 모두 삭제
-			File[] folderlist = folder.listFiles();
-			
-			for(int i=0; i<folderlist.length;i++)
-				folderlist[i].delete(); //파일 삭제
-			if(folderlist.length==0&&folder.isDirectory())
-				folder.delete(); //디렉터리 삭제
-		}
+	public int delRoom(String roomID) throws IOException {
+		Runtime.getRuntime().exec("chmod 777 /var/lib/tomcat8/webapps/ROOT/room/"+roomID);
+		Runtime.getRuntime().exec("rm -r /var/lib/tomcat8/webapps/ROOT/room/"+roomID);
 		
 		//room 정보 delete
     	try { 
-    		String sql = "DELETE FROM SCHEDULE WHERE roomID= ?;"; //SCHEDULE에서 해당 방의 모든 일정 삭제
+    		String sql = "DELETE FROM SCHEDULE WHERE roomID=?;"; //SCHEDULE에서 해당 방의 모든 일정 삭제
 			pstmt = conn.prepareStatement(sql); 
 			pstmt.setString(1, roomID); 
 			pstmt.executeUpdate();
 			
-    		String sqll = "DELETE FROM ROOMLIST WHERE roomID= ?;"; //ROOMLIST에서 해당 방 삭제
+    		String sqll = "DELETE FROM ROOMLIST WHERE roomID=?;"; //ROOMLIST에서 해당 방 삭제
 			pstmt = conn.prepareStatement(sqll); 
 			pstmt.setString(1, roomID); 
 			pstmt.executeUpdate();
 			pstmt.close();
 	    	conn.close();
-		}catch (Exception e) {
+		}catch (Exception e) { //등록된 일정이 없는 방이면 예외 생기긴 함 ㅋㅋ
 				e.printStackTrace(); 
-		} finally {
-	        if (pstmt != null) try { pstmt.close(); } catch (SQLException ignore) {}
-	        if (conn != null) try { conn.close(); } catch (SQLException ignore) {}
-	    }
-		return -1; //데이터베이스 오류
-	}
+		}
+		return 1;
+		}
 }

@@ -64,6 +64,8 @@ pageEncoding="UTF-8"%>
 			<p style="font-size:70px; margin-bottom: 0em">어서오세요!</p>
 			<p style="color:gray; font-size:20px;">캘린더를 확인하러 가볼까요?</p>
 			<button type="button" class="btn btn-default" onclick = "location.href = 'makeroom.jsp' ">방 생성</button>
+			<button type="button" class="btn btn-default" onclick = "location.href = 'delroom.jsp' ">방 삭제(테스트용)</button>
+
 
 		</div>
 		<!-- 이곳에 roomlist에서 모든 방 로드 -->
