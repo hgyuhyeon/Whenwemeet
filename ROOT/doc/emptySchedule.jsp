@@ -28,6 +28,7 @@ pageEncoding="UTF-8"%>
    	String psday = request.getParameter("day");
     
     //필터 2: Do not Disturb -> 선호하는 시간으로 수정, 해당 시간대 데이터만 가져오면 연산시간이 줄어들음
+    /* filter.jsp 에서는 더 건들 것 없이 타이틀만 수정하면 돼 */
     String tstart = request.getParameter("start");
     String tend = request.getParameter("end");
     
