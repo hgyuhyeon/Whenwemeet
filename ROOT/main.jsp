@@ -76,10 +76,10 @@ pageEncoding="UTF-8"%>
 				Room room = new Room();
 				room = rooms.get(i);
 				String roomID = room.getRoomID();
-				Stirng roomURL = "118.67.132.180:8080/room/"+roomID; //방의 절대주소는 이런식으로 되어있음! a=href 쓸때 이런식으로 링크 표시
+				//Stirng roomURL = "118.67.132.180:8080/room/"+roomID; //방의 절대주소는 이런식으로 되어있음! a=href 쓸때 이런식으로 링크 표시
 				String roomName = room.getRoomName();
 				%>
-			<%=roomName%>: <%=roomID%>
+			<br><%=roomName%>: <%=roomID%>
 			<!-- 이곳에 방 이름, 링크 출력, 방 접속버튼과 방 삭제 버튼도 출력할 수 있다면 방마다 출력하기
 	   방 접속은 action = room/roomURL , 방 삭제는 action = updateDeleteRoom.jsp 로 부탁해 -->
 			<%
