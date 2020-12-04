@@ -5,10 +5,14 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class RoomManager {
 	private Connection conn;
 	private PreparedStatement pstmt;
+	private ResultSet rs;
+
 	public RoomManager() {
 		try { 
 			Class.forName("com.mysql.jdbc.Driver");
@@ -37,7 +41,15 @@ public class RoomManager {
 		File newroom = new File(path);
 		newroom.createNewFile(); //생성
 		//파일 복사
-		String[] filelist = { "index.jsp", "detail.jsp", "addSchedule.jsp", "deleteSchedule.jsp", "filter.jsp", "emptySchedule.jsp" };
+		String[] filelist = { "index.jsp", 
+				"detail.jsp", 
+				"calender.jsp",
+				"addSchedule.jsp", 
+				"updateaddSchedule.jsp", 
+				"deleteSchedule.jsp", 
+				"updatedeleteSchedule.jsp", 
+				"filter.jsp", 
+				"emptySchedule.jsp" };
 		for (int i=0;i<filelist.length;i++) {
 			String index = "/var/lib/tomcat8/webapps/ROOT/doc/"+filelist[i];
 			File roominfo = new File(index);
@@ -54,8 +66,34 @@ public class RoomManager {
 			return pstmt.executeUpdate(); //return 1;
 		}catch (Exception e) {
 				e.printStackTrace(); 
-		} 
+		} finally {
+	        if (rs != null) try { rs.close(); } catch (SQLException ignore) {}
+	        if (conn != null) try { conn.close(); } catch (SQLException ignore) {}
+	    }
 		return -1; //데이터베이스 오류
+	}
+	public List<Room> getRoomList(String userID) {
+		List<Room> rooms = new ArrayList<Room>();
+		String sql = "SELECT * FROM ROOMLIST WHERE userID=?;";
+		try { 
+			pstmt = conn.prepareStatement(sql); 
+			pstmt.setString(1, userID); 
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				Room room = new Room();
+				room.setRoomID(rs.getString("roomID"));
+				room.setRoomName(rs.getString("roomName"));
+				rooms.add(room);
+			}
+		}catch (Exception e) {
+				e.printStackTrace(); 
+		} finally {
+	        if (rs != null) try { rs.close(); } catch (SQLException ignore) {}
+	        if (pstmt != null) try { pstmt.close(); } catch (SQLException ignore) {}
+	        if (conn != null) try { conn.close(); } catch (SQLException ignore) {}
+	    }
+		return rooms;
 	}
 	public int delRoom(String roomID) {
 		String path = "/var/lib/tomcat8/webapps/ROOT/room/"+roomID;
@@ -84,7 +122,10 @@ public class RoomManager {
 	    	conn.close();
 		}catch (Exception e) {
 				e.printStackTrace(); 
-		} 
+		} finally {
+	        if (pstmt != null) try { pstmt.close(); } catch (SQLException ignore) {}
+	        if (conn != null) try { conn.close(); } catch (SQLException ignore) {}
+	    }
 		return -1; //데이터베이스 오류
 	}
 }

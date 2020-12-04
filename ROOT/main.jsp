@@ -54,12 +54,15 @@
 		<div class="btn-group" role="group" aria-label="...">
  		<button type="button" class="btn btn-default" onclick = "location.href = 'logoutAction.jsp' ">로그아웃</button>
  		<button type="button" class="btn btn-default" onclick = "location.href = 'delId.jsp' ">회원 탈퇴</button>	 
+	
+
 		</div>
 		<div class="container">
 			<p style="font-size:70px; margin-bottom: 0em">어서오세요!</p>
 			<p style="color:gray; font-size:20px;">캘린더를 확인하러 가볼까요?</p>
 			<!-- 이곳에 roomlist에서 모든 방 로드 -->
-			<button type="button" class="btn btn-default toCalender" onclick = "location.href = 'calender.jsp' ">캘린더로</button>
+			<button type="button" class="btn btn-default" onclick = "location.href = 'makeroom.jsp' ">방 생성</button>
+
 		</div>
 	<%
 	}
