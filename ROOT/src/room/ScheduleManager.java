@@ -10,23 +10,25 @@ public class ScheduleManager {
 	private ResultSet rs;
 	public ScheduleManager() {
 		try { 
-			Class.forName("com.mysql.jdbc.Driver");
+			Class.forName("com.mysql.cj.jdbc.Driver");
 			conn = DriverManager.getConnection("jdbc:mysql://localhost/wwm", "user", "1234");
 			} catch (Exception e) {
 			e.printStackTrace(); 
 		}
 	}
 	public int addSchedule(String roomID, String year, String month, String day, String startTime, String endTime) {
-		String sql = "INSERT INTO SCHEDULE VALUES(?,?,?,?,?,?);";
+		String sql = "INSERT INTO SCHEDULE VALUES(?,?,?,?,?,?,?);";
     	int result = -1;
+    	String totalday = year+month+day;
 		try { 
 			pstmt = conn.prepareStatement(sql); 
 			pstmt.setString(1, roomID); 
-			pstmt.setString(2, year); 
-			pstmt.setString(3, month); 
-			pstmt.setString(4, day); 
-			pstmt.setString(5, startTime); 
-			pstmt.setString(6, endTime);
+			pstmt.setString(2, totalday); 
+			pstmt.setString(3, year); 
+			pstmt.setString(4, month); 
+			pstmt.setString(5, day); 
+			pstmt.setString(6, startTime); 
+			pstmt.setString(7, endTime);
 			result = pstmt.executeUpdate(); //return 1;
 		}catch (Exception e) {
 				e.printStackTrace(); 
@@ -77,6 +79,42 @@ public class ScheduleManager {
 				sdule.setYear(rs.getString("year"));
 				sdule.setMonth(rs.getString("month"));
 				sdule.setDay(rs.getString("day"));
+				sdule.setStartTime(rs.getString("startTime"));
+				sdule.setEndTime(rs.getString("endTime"));
+				sdules.add(sdule);
+			}
+		}catch (Exception e) {
+				e.printStackTrace(); 
+		} finally {
+	        if (rs != null) try { rs.close(); } catch (SQLException ignore) {}
+	        if (pstmt != null) try { pstmt.close(); } catch (SQLException ignore) {}
+	        if (conn != null) try { conn.close(); } catch (SQLException ignore) {}
+	    }
+		return sdules;
+	}
+	public List<Schedule> getEmptySchedule(String roomID, String dstartend[], String tstartend[], String ltime) {
+		List<Schedule> sdules = new ArrayList<Schedule>();
+		
+		
+		String sqlselect = "SELECT * FROM SCHEDULE WHERE (roomID=?) ";
+		String sqlfilter = "";
+		
+		if(dstartend[0]!=null) //필터 1
+			sqlfilter += "AND (totalDay BETWEEN "+dstartend[0]+" AND "+dstartend[1]+") ";
+		if(tstartend[0]!=null)
+			sqlfilter += "AND (startTime>=+"+tstartend[0]+" AND endtime<="+tstartend[1]+") ";
+		if(ltime!=null)
+			sqlfilter += "AND (endtime-starttime>="+ltime+") ";
+		String sqlorder = " ORDER BY 2,3,4,5;";
+		
+		String sql = sqlselect + sqlfilter + sqlorder;
+		try { 
+			pstmt = conn.prepareStatement(sql); 
+			pstmt.setString(1, roomID); 
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				Schedule sdule = new Schedule();
 				sdule.setStartTime(rs.getString("startTime"));
 				sdule.setEndTime(rs.getString("endTime"));
 				sdules.add(sdule);
