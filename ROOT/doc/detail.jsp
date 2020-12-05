@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="java.sql.*" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="java.util.List" %>
 <%@ page import="room.ScheduleManager" %>
+<%@ page import="room.Schedule" %>
 <!-- jinseo:open source bootstrap 사용 -->
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01
@@ -111,10 +113,11 @@ Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 			%>
 				<p class="margin"><font size="4"><%=starttime %>시부터 <%=endtime %>시까지</font></p>
 			<%
-				for (int i = starttime; i < endtime; i++){
-					tb[i] = 1;
+				for (int j = Integer.parseInt(starttime); j < Integer.parseInt(endtime); j++){
+					tb[j] = 1;
 	 			} /* 테이블 채우기 */
 			}
+			%>
 	    <!-- calender.jsp의 버튼으로부터 전송된 연,월,일 값 전달받은 부분-->
 		<div class="container">
 			<table class="table table-bordered">
