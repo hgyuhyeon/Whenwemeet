@@ -97,28 +97,24 @@ Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 		<%
 		int [] tb = new int[24]; //table 대신 사용
 		ScheduleManager smanager = new ScheduleManager();
-                String url = (String)session.getAttribute("roomID");
-                String[] res = url.split("/");
-                String roomID = res[2];
-		String syear = request.getParameter("year");
-		String smonth = request.getParameter("month");
-		String sday = request.getParameter("day");
-		ResultSet rs = smanager.getSchedule(roomID, syear, smonth, sday);
-		
-		//각 일정별로 미리 칸 채워서 출력
-		while(rs.next()){
-	                int starttime = Integer.parseInt(rs.getString("startTime"));
-			int endtime = Integer.parseInt(rs.getString("endTime"));
-			for (int i = starttime; i < endtime; i++){
-				tb[i] = 1;
-	 		} /* db채우기 */
-	 	%>
-	 		<p class="margin"><font size="4"><%=starttime %>시부터 <%=endtime %>시까지</font></p>
-	    <%
-	      }
-	      rs.close();
-	    %>
-		
+		List<Schedule> sdules = new ArrayList<Schedule>();
+		String url = (String)session.getAttribute("roomID");
+		String[] res = url.split("/");
+		String roomID = res[2];
+		sdules = smanager.getEntireSchedule(roomID);
+		if(sdules.size()!=0)
+			for(int i=0;i<sdules.size();i++) {
+				Schedule sdule = new Schedule();
+				sdule = sdules.get(i);
+				String starttime = sdule.getStartTime();
+				String endtime = sdule.getEndTime();
+			%>
+				<p class="margin"><font size="4"><%=starttime %>시부터 <%=endtime %>시까지</font></p>
+			<%
+				for (int i = starttime; i < endtime; i++){
+					tb[i] = 1;
+	 			} /* 테이블 채우기 */
+			}
 	    <!-- calender.jsp의 버튼으로부터 전송된 연,월,일 값 전달받은 부분-->
 		<div class="container">
 			<table class="table table-bordered">
