@@ -13,7 +13,7 @@
       String roomID = request.getServletPath();
       session.setAttribute("roomID", roomID); 
       %>
-      location.href = 'calender.jsp'; 
+      location.href = 'calendar.jsp'; 
 </script> 
 </body> 
 </html>

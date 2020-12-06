@@ -68,6 +68,33 @@ public class ScheduleManager {
 	    }
 		return sdules;
 	}
+	public List<Schedule> getMonthSchedule(String roomID, String year, String month) {
+		List<Schedule> sdules = new ArrayList<Schedule>();
+
+		String sql = "SELECT * FROM SCHEDULE WHERE roomID=? "
+				+ "AND year=? AND month=?;";
+		try { 
+			pstmt = conn.prepareStatement(sql); 
+			pstmt.setString(1, roomID); 
+			pstmt.setString(2, year); 
+			pstmt.setString(3, month); 
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				Schedule sdule = new Schedule();
+				sdule.setStartTime(rs.getString("startTime"));
+				sdule.setEndTime(rs.getString("endTime"));
+				sdules.add(sdule);
+			}
+		}catch (Exception e) {
+				e.printStackTrace(); 
+		} finally {
+	        if (rs != null) try { rs.close(); } catch (SQLException ignore) {}
+	        if (pstmt != null) try { pstmt.close(); } catch (SQLException ignore) {}
+	        if (conn != null) try { conn.close(); } catch (SQLException ignore) {}
+	    }
+		return sdules;
+	}
 	public List<Schedule> getEntireSchedule(String roomID) {
 		List<Schedule> sdules = new ArrayList<Schedule>();
 		String sql = "SELECT * FROM SCHEDULE WHERE roomID=?;";

@@ -47,7 +47,7 @@ public class RoomManager {
 				//파일 복사
 				String[] filelist = { "index.jsp", 
 						"detail.jsp", 
-						"calender.jsp",
+						"calendar.jsp",
 						"addSchedule.jsp", 
 						"updateaddSchedule.jsp", 
 						"deleteSchedule.jsp", 

@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="java.sql.*" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="java.util.List" %>
+<%@ page import="room.ScheduleManager" %>
+<%@ page import="room.Schedule" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <html>
@@ -123,18 +126,33 @@ background-color: #FFF4F7;
      out.println("<br>");
     }
    }
-   for(int i=1; i<=end; i++) { //날짜출력
-    
-	
-   //    일정 추가 부분
-//   일정이 없으면 그냥 날짜만 출력하고 일정이 있으면 버튼 출력해서 진서가 만든 상세 일정으로 들어갈 수 있게 하려구!
-//   일정 없을 때 
-//   out.println("<td>" + i + "</td>");
+   //일정 추가 부분
+	int [] tb = new int[end]; //table 대신 사용
+   	int size;
+	ScheduleManager smanager = new ScheduleManager();
+	List<Schedule> sdules = new ArrayList<Schedule>();
+	String url = (String)session.getAttribute("roomID");
+	String[] res = url.split("/");
+	String roomID = res[2];
+	String syear = request.getParameter("year");
+	String smonth = request.getParameter("month");
+	sdules = smanager.getMonthSchedule(roomID, syear, smonth);
+	if(sdules.size()!=0)
+		for(int i=0;i<sdules.size();i++) {
+			Schedule sdule = new Schedule();
+			sdule = sdules.get(i);
+			String sdays = sdule.getDay();
+			tb[Integer.parseInt(sdays)] = 1;
+		}
+   //일정 없을 때 
+   //out.println("<td>" + i + "</td>");
    
    //일정 있을 때
+   for(int i=1; i<=end; i++) { //날짜출력
    %>
    <td>
    <%=i%>
+   <%//if(tb[i-1]==1) {%>
    <!-- 이부분은 버튼 누르면 연, 월, 일 정보 보내는 부분이야! -->
    <form action="detail.jsp" method="get">
    		<input type="hidden" name="years" value="<%=year%>">
@@ -148,10 +166,11 @@ background-color: #FFF4F7;
     if((br%7)==0 && i!=end) {
      out.println("</tr><tr height=100>");
     }
-   }
+    //}
+    }
    while((br++)%7!=0) //말일 이후 빈칸출력
     out.println("<td>&nbsp;</td>");
-   %>
+    %>
    </tr>
   </table>
   <HR>
