@@ -100,10 +100,10 @@ Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 		int [] tb = new int[24]; //table 대신 사용
 		ScheduleManager smanager = new ScheduleManager();
 		List<Schedule> sdules = new ArrayList<Schedule>();
-		String url = (String)session.getAttribute("roomID");
+		String url = (String)session.getAttribute("roomID"); //전달받은 년월일을 이 함수의 parameter에 포함해서 데이터를얻어와야 함
 		String[] res = url.split("/");
 		String roomID = res[2];
-		sdules = smanager.getEntireSchedule(roomID);
+		sdules = smanager.getSchedule(roomID);
 		if(sdules.size()!=0)
 			for(int i=0;i<sdules.size();i++) {
 				Schedule sdule = new Schedule();
