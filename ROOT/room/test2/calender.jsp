@@ -55,7 +55,7 @@ background-color: #FFF4F7;
 		        <a class="nav-link" href="#">When we meet</a>
 		      </li>
 		      <li class="nav-item">
-		        <a class="nav-link" href="main.jsp">메인</a>
+		        <a class="nav-link" href="http://118.67.132.180:8080/main.jsp">메인</a>
 		      </li>
 		      <li class="nav-item active">
 		        <a class="nav-link" href="#">캘린더</a>
@@ -161,3 +161,5 @@ background-color: #FFF4F7;
   </center>
  </body>
 </html>
+
+
