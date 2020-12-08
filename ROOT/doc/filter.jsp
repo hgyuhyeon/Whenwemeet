@@ -67,7 +67,31 @@ Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 			필터 기능을 이용하여 꼼꼼하게 일정 관리 해보세요!
 		</p>
 		<div class="container">
-			<span style="font-size:1.5em;">1. Do not disturb</span>
+			<span style="font-size:1.5em;">1. 일정 범위(무조건 fill)</span>
+			<br />
+			<form action="emptySchedule.jsp" method="get">
+				<div class="row">
+					<div class="col">
+						<input name="syear" type="text" class="form-control"/>년
+						</div>
+						<div class="col">
+						<input name="smonth" type="text" class="form-control"/>월
+						</div>
+						<div class="col">
+						<input name="sday" type="text" class="form-control"/>일 부터
+						<br />
+						<input name="eyear" type="text" class="form-control"/>년
+						</div>
+						<div class="col">
+						<input name="emonth" type="text" class="form-control"/>월
+						</div>
+						<div class="col">
+						<input name="eday" type="text" class="form-control"/>일 까지
+						<br />
+					</div>
+				</div>
+			<br><br>
+			<span style="font-size:1.5em;">2. 선호 시간</span>
 			<br />
 			<form action="emptySchedule.jsp" method="get">
 				<div class="row">
