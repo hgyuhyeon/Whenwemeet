@@ -5,6 +5,7 @@ pageEncoding="UTF-8"%>
 <%@ page import="room.ScheduleManager" %>
 <%@ page import="room.Schedule" %>
 <%@ page import="room.EmptyScheduleList" %>
+<%@ page import="java.io.PrintWriter" %>
 
 <!DOCTYPE html>
 <html>
@@ -20,7 +21,14 @@ pageEncoding="UTF-8"%>
     <%
     ScheduleManager smanager = new ScheduleManager(); //일정 관리 클래스
 
-    //필터 1: 불러올 데이터의 날짜 범위 지정( sql: 해당 날짜의 데이터만 가져오도록 함 )
+    //필터 1: 불러올 데이터의 날짜 범위 지정
+    if(request.getParameter("syear") == null || request.getParameter("smonth") == null || request.getParameter("sday") == null || request.getParameter("eyear") == null || request.getParameter("emonth") == null || request.getParameter("eday") == null) {
+        PrintWriter script = response.getWriter();
+	script.println("<script>");
+	script.println("alert('날짜 범위는 필수로 지정해야 합니다.')");
+	script.println("history.back()");
+	script.println("</script>");
+    }
     //시작 년.월.일
     String[] dstartend = new String[2]; //0은 시작년월일, 1은 종료년월일
     dstartend[0] = request.getParameter("syear");
@@ -35,21 +43,15 @@ pageEncoding="UTF-8"%>
     String edtemp = request.getParameter("eday");
     dstartend[1] += smanager.convertPm(edtemp);
     
-    //필터 2: Do not Disturb -> 선호하는 시간으로 수정, 해당 시간대 데이터만 가져오면 연산시간이 줄어들음
-    /* filter.jsp 에서는 더 건들 것 없이 타이틀만 수정하면 돼 */
-    String[] tstartend = new String[2]; //0은 시작시간, 1은 종료시간
-    tstartend[0] = request.getParameter("start");
-    tstartend[1] = request.getParameter("end");
-    
-    //필터 3: 최소 시간( sql: endTime-startTime 했을 때 만족하지 못하면 List<Schedule>에 insert 못하게 필터링)
+    //필터 2: 최소 시간
     String ltime = request.getParameter("time");
     
-    //데이터셋 가져오기( 해당 필터를 모두 만족하는 범위 내 데이터만 가져오도록 sql 쓰는 함수 생성 예정 )
+    //데이터셋 가져오기
 		List<EmptyScheduleList> sdules = new ArrayList<EmptyScheduleList>(); //현재 스케줄을 리턴받을 리스트
 		String url = (String)session.getAttribute("roomID");
 		String[] res = url.split("/");
 		String roomID = res[2];
-		sdules = smanager.getEmptySchedule(roomID, dstartend, tstartend, ltime); //이부분 함수 추후 수정할거임
+		sdules = smanager.getEmptySchedule(roomID, dstartend, ltime); 
 		if(sdules.size()!=0) {
 		%>빈 시간 목록 <br><%
 			for(int i=0;i<sdules.size();i++) {
@@ -64,9 +66,6 @@ pageEncoding="UTF-8"%>
                                 %><%=sdules.get(i).getEndMonth()%>월<%
                                 %><%=sdules.get(i).getEndDay()%>일<%
 				%><%=sdules.get(i).getEndTime()%>시 까지<br><%
-
-				//총 8개 원소 sdule.getStartYear(); 같은 방식으로 불러오면 String 리턴함.
-				//표현식으로 출력하면 끝
       			}
 		}
 		%>
