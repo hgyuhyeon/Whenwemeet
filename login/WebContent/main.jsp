@@ -31,7 +31,10 @@ pageEncoding="UTF-8"%>
 			heigth: 10em;
 		}
 	</style>
-	
+	<center>
+	<h1><span style="font-size:2.5em;color:pink;font-family: Georgia;">When we meet!</span></h1>
+	</center>
+	<HR>
 	<div class="col-lg-2"> </div> 
 	<div class="col-lg-8"> </div> 
 	<div class="col-lg-2">
@@ -53,10 +56,6 @@ pageEncoding="UTF-8"%>
 	} 
 	%>
 	</div>
-	<center>
-	<h1><span style="font-size:2.5em;color:pink;font-family: Georgia;">When we meet!</span></h1>
-	</center>
-	<HR> 
 </head>
 
 <body>
