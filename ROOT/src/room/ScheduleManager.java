@@ -44,7 +44,7 @@ public class ScheduleManager {
 		List<Schedule> sdules = new ArrayList<Schedule>();
 
 		String sql = "SELECT * FROM SCHEDULE WHERE roomID=? "
-				+ "AND year=? AND month=? AND day=?;";
+				+ "AND year=? AND month=? AND day=? ORDER BY 2;";
 		try { 
 			pstmt = conn.prepareStatement(sql); 
 			pstmt.setString(1, roomID); 
@@ -72,7 +72,7 @@ public class ScheduleManager {
 		List<Schedule> sdules = new ArrayList<Schedule>();
 
 		String sql = "SELECT * FROM SCHEDULE WHERE roomID=? "
-				+ "AND year=? AND month=?;";
+				+ "AND year=? AND month=? ORDER BY 2;";
 		try { 
 			pstmt = conn.prepareStatement(sql); 
 			pstmt.setString(1, roomID); 
@@ -97,7 +97,7 @@ public class ScheduleManager {
 	}
 	public List<Schedule> getEntireSchedule(String roomID) {
 		List<Schedule> sdules = new ArrayList<Schedule>();
-		String sql = "SELECT * FROM SCHEDULE WHERE roomID=?;";
+		String sql = "SELECT * FROM SCHEDULE WHERE roomID=? ORDER BY 2;";
 		try { 
 			pstmt = conn.prepareStatement(sql); 
 			pstmt.setString(1, roomID); 
@@ -127,20 +127,11 @@ public class ScheduleManager {
 		//두자릿수면 그대로 리턴
 		return temp;
 	}
-	public List<EmptyScheduleList> getEmptySchedule(String roomID, String dstartend[], String tstartend[], String ltime) {		
-		String sqlselect = "SELECT * FROM SCHEDULE WHERE (roomID=?) ";
-		String sqlfilter = "";
-		
-		if(dstartend[0]!=null) //필터 1
-			sqlfilter += "AND (totalDay BETWEEN "+dstartend[0]+" AND "+dstartend[1]+") ";
-		if(tstartend[0]!=null)
-			sqlfilter += "AND (startTime>=+"+tstartend[0]+" AND endtime<="+tstartend[1]+") ";
-		if(ltime!=null)
-			sqlfilter += "AND (endtime-starttime>="+ltime+") ";
-		String sqlorder = "ORDER BY 2,3,4,5;";
-		
-		String sql = sqlselect + sqlfilter + sqlorder;
-		
+	public List<EmptyScheduleList> getEmptySchedule(String roomID, String dstartend[], String tstartend[], String ltime) {	
+		String sql = "SELECT * FROM SCHEDULE WHERE (roomID=?)"
+				+ " AND (totalDay BETWEEN ? AND ?)"
+				+ " ORDER BY 2;";		
+				
 		List<Schedule> sdules = new ArrayList<Schedule>(); //sql문 결과로 나온 스케줄들을 전부 저장
 		List<Schedule> pempty = new ArrayList<Schedule>(); //sdules의 이전 스케줄 리스트
 		List<EmptyScheduleList> results = new ArrayList<EmptyScheduleList>(); //빈 시간 리스트: 결과 리턴값
@@ -148,35 +139,61 @@ public class ScheduleManager {
 		try { 
 			pstmt = conn.prepareStatement(sql); 
 			pstmt.setString(1, roomID); 
+			pstmt.setString(2, dstartend[0]); 
+			pstmt.setString(3, dstartend[1]); 
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
 				Schedule sdule = new Schedule();
+				sdule.setYear(rs.getString("year"));
+				sdule.setMonth(rs.getString("month"));
+				sdule.setDay(rs.getString("day"));
 				sdule.setStartTime(rs.getString("startTime"));
 				sdule.setEndTime(rs.getString("endTime"));
 				sdules.add(sdule);
 			} //일정들을 리스트에 저장
-			
+			//마지막 날 추가 (빈 시간 출력용)
+			Schedule last = new Schedule();
+			//dstartend[1]의 8자리를 2020 / 01 / 01으로 split
+			int lyear = Integer.parseInt(dstartend[1].substring(0, 4));
+			int lmonth = Integer.parseInt(dstartend[1].substring(4, 6));
+			int lday = Integer.parseInt(dstartend[1].substring(6));
+			last.setYear(Integer.toString(lyear));
+			last.setMonth(Integer.toString(lmonth));
+			last.setDay(Integer.toString(lday));
+			last.setStartTime("24");
+			last.setEndTime("24");
+			sdules.add(last);
 			
 			for(int i=0;i<sdules.size();i++) {
-				Schedule sdule = new Schedule(); //빈 스케줄
+				Schedule sdule = new Schedule(); 
 				sdule = sdules.get(i); //현재 스케줄
-				pempty.add(sdule); //결과 리스트에 추가
-
-				if(i!=0) { //pempty 리스트에 값이 있을 때
-					EmptyScheduleList empty = new EmptyScheduleList(); //빈 스케줄
-					
-					empty.setStartYear(sdule.getYear());
-					empty.setEndYear(pempty.get(i-1).getYear()); //시작년도, 끝년도 설정
-					empty.setStartMonth(sdule.getMonth());
-					empty.setEndMonth(pempty.get(i-1).getMonth()); //시작월, 끝월 설정
-					empty.setStartDay(sdule.getMonth());
-					empty.setEndDay(pempty.get(i-1).getDay()); //시작일, 끝일 설정
-					empty.setStartTime(pempty.get(i-1).getEndTime()); //빈 시간의 시작은 이전 스케줄의 끝
-					empty.setEndTime(sdule.getStartTime()); //빈 시간의 끝은 현재 스케줄의 시작
-					//시작시간, 끝시간 설정
-					results.add(empty); //결과값에 추가
-				}
+				pempty.add(sdule); //이전 스케줄 리스트에 추가
+				if(i==0)
+					continue;
+				EmptyScheduleList empty = new EmptyScheduleList(); //빈 스케줄
+				
+				//시작시간, 끝시간 설정
+				empty.setStartYear(sdules.get(i).getYear());
+				empty.setEndYear(pempty.get(i-1).getYear()); //시작년도, 끝년도 설정
+				empty.setStartMonth(sdules.get(i).getMonth());
+				empty.setEndMonth(pempty.get(i-1).getMonth()); //시작월, 끝월 설정
+				empty.setStartDay(pempty.get(i-1).getDay());
+				empty.setEndDay(sdules.get(i).getDay()); //시작일, 끝일 설정
+				empty.setStartTime(pempty.get(i-1).getEndTime()); //빈 시간의 시작은 이전 스케줄의 끝
+				empty.setEndTime(sdules.get(i).getStartTime()); //빈 시간의 끝은 현재 스케줄의 시작
+				
+				
+				//필터 3 시작
+				if(ltime!=null) {
+					int tstart = Integer.parseInt(empty.getStartTime());
+					int tend = Integer.parseInt(empty.getEndTime());
+					if(tend<tstart)
+						tend+=24;
+					if(tend-tstart <= Integer.parseInt(ltime))
+						continue;
+				}					
+				results.add(empty); //결과값에 추가
 			}
 
 		}catch (Exception e) {

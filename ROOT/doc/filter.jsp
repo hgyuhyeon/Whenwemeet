@@ -79,7 +79,11 @@ Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 						</div>
 						<div class="col">
 						<input name="sday" type="text" class="form-control"/>일 부터
-						<br />
+					</div>
+				</div>
+				<br/><br>
+				<div class="row">
+					<div class="col">
 						<input name="eyear" type="text" class="form-control"/>년
 						</div>
 						<div class="col">
@@ -88,27 +92,8 @@ Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 						<div class="col">
 						<input name="eday" type="text" class="form-control"/>일 까지
 						<br />
-					</div>
-				</div>
-			<br><br>
-			<span style="font-size:1.5em;">2. 선호 시간</span>
-			<br />
-			<form action="emptySchedule.jsp" method="get">
-				<div class="row">
-					<div class="col">
-						<input name="year" type="text" class="form-control"/>년
 						</div>
-						<div class="col">
-						<input name="month" type="text" class="form-control"/>월
-						</div>
-						<div class="col">
-						<input name="day" type="text" class="form-control"/>일
-						<br />
-					</div>
 				</div>
-				
-				<input name="start" type="text" class="form-control" />시부터
-				<input name="end" type="text" class="form-control" />시 까지<br>
 			<br><br>
 			<span style="font-size:1.5em;">2. 필요한 최소 시간</span><br>
 			<br />
