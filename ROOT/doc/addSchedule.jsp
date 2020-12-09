@@ -56,10 +56,10 @@ Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 		        <a class="nav-link" href="#">When we meet</a>
 		      </li>
 		      <li class="nav-item">
-		        <a class="nav-link" href="main.jsp">메인</a>
+		        <a class="nav-link" href="http://wwmeet.tk">메인</a>
 		      </li>
 		      <li class="nav-item">
-		        <a class="nav-link" href="calender.jsp">캘린더</a>
+		        <a class="nav-link" href="calendar.jsp">캘린더</a>
 		      </li>
 		    </ul>
 		</nav>		
