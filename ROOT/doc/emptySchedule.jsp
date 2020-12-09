@@ -52,8 +52,8 @@ pageEncoding="UTF-8"%>
 		String[] res = url.split("/");
 		String roomID = res[2];
 		sdules = smanager.getEmptySchedule(roomID, dstartend, ltime); 
+                %>빈 시간 목록 <br><%
 		if(sdules.size()!=0) {
-		%>빈 시간 목록 <br><%
 			for(int i=0;i<sdules.size();i++) {
 				//빈 시간 출력 부분
 				//start
@@ -67,6 +67,8 @@ pageEncoding="UTF-8"%>
                                 %><%=sdules.get(i).getEndDay()%>일<%
 				%><%=sdules.get(i).getEndTime()%>시 까지<br><%
       			}
+		} else {
+			%>빈 시간이 없습니다!<%
 		}
 		%>
     </body>

@@ -67,7 +67,7 @@ Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 			필터 기능을 이용하여 꼼꼼하게 일정 관리 해보세요!
 		</p>
 		<div class="container">
-			<span style="font-size:1.5em;">1. 일정 범위(무조건 fill)</span>
+			<span style="font-size:1.5em;">1. 일정 범위</span>
 			<br />
 			<form action="emptySchedule.jsp" method="get">
 				<div class="row">

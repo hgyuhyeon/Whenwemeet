@@ -127,7 +127,7 @@ public class ScheduleManager {
 		//두자릿수면 그대로 리턴
 		return temp;
 	}
-	public List<EmptyScheduleList> getEmptySchedule(String roomID, String dstartend[], String tstartend[], String ltime) {	
+	public List<EmptyScheduleList> getEmptySchedule(String roomID, String dstartend[], String ltime) {	
 		String sql = "SELECT * FROM SCHEDULE WHERE (roomID=?)"
 				+ " AND (totalDay BETWEEN ? AND ?)"
 				+ " ORDER BY 2;";		
@@ -142,6 +142,19 @@ public class ScheduleManager {
 			pstmt.setString(2, dstartend[0]); 
 			pstmt.setString(3, dstartend[1]); 
 			rs = pstmt.executeQuery();
+			
+			//첫 날 추가 (빈 시간 출력용)
+			Schedule first = new Schedule();
+			//dstartend[0]의 8자리를 2020 / 01 / 01으로 split
+			int fyear = Integer.parseInt(dstartend[0].substring(0, 4));
+			int fmonth = Integer.parseInt(dstartend[0].substring(4, 6));
+			int fday = Integer.parseInt(dstartend[0].substring(6));
+			first.setYear(Integer.toString(fyear));
+			first.setMonth(Integer.toString(fmonth));
+			first.setDay(Integer.toString(fday));
+			first.setStartTime("0");
+			first.setEndTime("0");
+			sdules.add(first);
 			
 			while(rs.next()) {
 				Schedule sdule = new Schedule();
@@ -186,13 +199,17 @@ public class ScheduleManager {
 				
 				//필터 3 시작
 				if(ltime!=null) {
+					int dstart = Integer.parseInt(empty.getStartDay());
+					int dend = Integer.parseInt(empty.getEndDay());
 					int tstart = Integer.parseInt(empty.getStartTime());
 					int tend = Integer.parseInt(empty.getEndTime());
-					if(tend<tstart)
-						tend+=24;
-					if(tend-tstart <= Integer.parseInt(ltime))
-						continue;
-				}					
+					if(tend<tstart) //날짜가 넘어가면
+						tend += 24 * (dend-dstart); //날짜 일수만큼 시간의 끝 추가
+					if(tend-tstart <= Integer.parseInt(ltime)) //최소 시간 만족 못하면
+						continue; //패스
+				}
+				//필터 3 끝
+				
 				results.add(empty); //결과값에 추가
 			}
 

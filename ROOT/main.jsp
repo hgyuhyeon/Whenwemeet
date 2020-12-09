@@ -58,22 +58,18 @@ pageEncoding="UTF-8"%>
  		<button type="button" class="btn btn-default" onclick = "location.href = 'logoutAction.jsp' ">로그아웃</button>
  		<button type="button" class="btn btn-default" onclick = "location.href = 'delId.jsp' ">회원 탈퇴</button>	 
 	
-
-		</div>
-		<div class="container">
-			<p style="font-size:70px; margin-bottom: 0em">어서오세요!</p>
-			<p style="color:gray; font-size:20px;">캘린더를 확인하러 가볼까요?</p>
-			<button type="button" class="btn btn-default" onclick = "location.href = 'makeroom.jsp' ">방 생성</button>
-			<button type="button" class="btn btn-default" onclick = "location.href = 'delroom.jsp' ">방 삭제(테스트용)</button>
-
-
-		</div>
 		<!-- 이곳에 roomlist에서 모든 방 로드 -->
 		<% //사용자가 만든 모든 방 목록 불러오기
 		RoomManager rmanager = new RoomManager();
 		List<Room> rooms = new ArrayList<Room>();
 		rooms = rmanager.getRoomList(userID);
-		if(rooms.size()!=0) //사용자가 생성한 방이 있으면
+		if(rooms.size()!=0) { //사용자가 생성한 방이 있으면
+			%>
+			<br><br>
+			<button type="button" class="btn btn-default" onclick = "location.href = 'makeroom.jsp' ">방 생성</button>
+			<button type="button" class="btn btn-default" onclick = "location.href = 'delroom.jsp' ">방 삭제</button>
+			<br>
+			<%
 			for(int i=0;i<rooms.size();i++) {
 				Room room = new Room();
 				room = rooms.get(i);
@@ -81,10 +77,21 @@ pageEncoding="UTF-8"%>
 				//Stirng roomURL = "118.67.132.180:8080/room/"+roomID; //방의 절대주소는 이런식으로 되어있음! a=href 쓸때 이런식으로 링크 표시
 				String roomName = room.getRoomName();
 				%>
-			<br><%=roomName%>: <%=roomID%>
+                        <br><%=roomName%>: wwmeet.tk/room/<%=roomID%>
 			<!-- 이곳에 방 이름, 링크 출력, 방 접속버튼과 방 삭제 버튼도 출력할 수 있다면 방마다 출력하기
 	   방 접속은 action = room/roomURL , 방 삭제는 action = updateDeleteRoom.jsp 로 부탁해 -->
 			<%
+			}
+		} else {
+				%>
+				</div>
+		                <div class="container">
+                        		<p style="font-size:60px; margin-bottom: 0em">방이 없습니다!!</p>
+                        		<p style="color:gray; font-size:20px;">첫 번째 방을 생성해 주세요</p>
+                        		<button type="button" class="btn btn-default" onclick = "location.href = 'makeroom.jsp' ">방 만들기</button>
+                		</div>
+
+				<%
 			}
 		%>
 	<%
