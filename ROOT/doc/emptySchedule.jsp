@@ -69,13 +69,13 @@ pageEncoding="UTF-8"%>
     <%
     ScheduleManager smanager = new ScheduleManager(); //일정 관리 클래스
     //필터 1: 불러올 데이터의 날짜 범위 지정
-    if(request.getParameter("syear") == null || request.getParameter("smonth") == null || request.getParameter("sday") == null || request.getParameter("eyear") == null || request.getParameter("emonth") == null || request.getParameter("eday") == null) {
+    if(request.getParameter("syear") == "" || request.getParameter("smonth") == "" || request.getParameter("sday") == "" || request.getParameter("eyear") == "" || request.getParameter("emonth") == "" || request.getParameter("eday") == "") {
         PrintWriter script = response.getWriter();
    script.println("<script>");
    script.println("alert('날짜 범위는 필수로 지정해야 합니다.')");
    script.println("history.back()");
    script.println("</script>");
-    }
+    } else {
     //시작 년.월.일
     String[] dstartend = new String[2]; //0은 시작년월일, 1은 종료년월일
     dstartend[0] = request.getParameter("syear");
@@ -92,7 +92,8 @@ pageEncoding="UTF-8"%>
     
     //필터 2: 최소 시간
     String ltime = request.getParameter("time");
-    
+    if(ltime == "")
+    	ltime = "0";
     //데이터셋 가져오기
       List<EmptyScheduleList> sdules = new ArrayList<EmptyScheduleList>(); //현재 스케줄을 리턴받을 리스트
       String url = (String)session.getAttribute("roomID");
@@ -117,6 +118,7 @@ pageEncoding="UTF-8"%>
 	       %><br><br><button type="button" class="btn btn-primary" onclick = "location.href = 'index.jsp' ">처음으로</button><%
       } else {
          %>빈 시간이 없습니다!<%
+      }
       }
       %>
     </body>
