@@ -12,7 +12,7 @@ charset=UTF-8" pageEncoding="UTF-8"%>
 </head> 
 <body> 
 	<center>
-	<h2><span style="font-size:2.5em;color:pink;font-family: Georgia;">When we meet!</span></h2></center>
+	<h2><span style="font-size:2.5em;color:pink;font-family: Georgia;">When we meet?</span></h2></center>
 	<HR>
 	
 	<!-- 로그인폼--> 
@@ -31,23 +31,17 @@ charset=UTF-8" pageEncoding="UTF-8"%>
 			<div class="form-group-lg"> 
 				<input type="text" class="form-control" placeholder="아이디" name="userID" maxlength="20"> 
 			</div> 
-			<div class="btn-group" role="group" aria-label="...">
-  				<button type="button" class="btn btn-outline-danger"></button>
-			</div>
+			<br>
 			
 			<div class="form-group-lg"> 
 				<input type="password" class="form-control" placeholder="비밀번호" name="userPassword" maxlength="20"> 
 			</div> 
-			<div class="btn-group" role="group" aria-label="...">
-  				<button type="button" class="btn btn-outline-danger"></button>
-			</div>			
+			<br>			
 			
 			<div class="form-group-lg"> 
 				<input type="text" class="form-control" placeholder="이름" name="userName" maxlength="20"> 
 			</div>			
-			<div class="btn-group" role="group" aria-label="...">
-  				<button type="button" class="btn btn-outline-danger"></button>
-			</div>	
+			<br>
 					
 			<div class="form-group-lg" style="text-align: center;"> 
 				<div class="btn-group" data-toggle="buttons">
@@ -56,16 +50,12 @@ charset=UTF-8" pageEncoding="UTF-8"%>
 							</label>
 				</div>
 			</div> 
-			<div class="btn-group" role="group" aria-label="...">
-  				<button type="button" class="btn btn-outline-danger"></button>
-			</div>
+			<br>
 			
 			<div class="form-group-lg"> 
 				<input type="text" class="form-control" placeholder="이메일" name="userEmail" maxlength="50"> 
 			</div> 
-			<div class="btn-group" role="group" aria-label="...">
-  				<button type="button" class="btn btn-outline-danger"></button>
-			</div>			
+			<br>			
 			<div class="form-group-lg">
 				<input type="submit" class="btn btn-danger disabled form-control" value="회원가입"> 
 			</div> 

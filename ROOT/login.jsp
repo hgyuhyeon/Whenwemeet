@@ -13,7 +13,7 @@
 <body> 
 
 <center>
-<h2><span style="font-size:2.5em;color:pink;font-family: Georgia;">When we meet!</span></h2>
+<h2><span style="font-size:2.5em;color:pink;font-family: Georgia;">When we meet?</span></h2>
 </center>
 <HR>
 
@@ -30,16 +30,11 @@
 			<div class="form-group-lg"> 
 				<input type="text" class="form-control" placeholder="아이디" name="userID" maxlength="20"> 
 			</div> 
-			<div class="btn-group" role="group" aria-label="...">
-  				<button type="button" class="btn btn-outline-danger"></button>
-			</div>
-			
+			<br>
 			<div class="form-group-lg"> 
 				<input type="password" class="form-control" placeholder="비밀번호" name="userPassword" maxlength="20"> 
 			</div> 
-			<div class="btn-group" role="group" aria-label="...">
-  				<button type="button" class="btn btn-outline-danger"></button>
-			</div>
+			<br>
 			<div class="form-group-lg">
 				<input type="submit" class="btn btn-danger disabled form-control btn-lg"  value="로그인"> 
 			</div>

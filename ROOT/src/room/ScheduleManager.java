@@ -71,8 +71,7 @@ public class ScheduleManager {
 	public List<Schedule> getMonthSchedule(String roomID, String year, String month) {
 		List<Schedule> sdules = new ArrayList<Schedule>();
 
-		String sql = "SELECT * FROM SCHEDULE WHERE roomID=? "
-				+ "AND year=? AND month=? ORDER BY 2;";
+		String sql = "SELECT * FROM SCHEDULE WHERE roomID=? AND year=? AND month=? ORDER BY 2;";
 		try { 
 			pstmt = conn.prepareStatement(sql); 
 			pstmt.setString(1, roomID); 
@@ -82,8 +81,7 @@ public class ScheduleManager {
 			
 			while(rs.next()) {
 				Schedule sdule = new Schedule();
-				sdule.setStartTime(rs.getString("startTime"));
-				sdule.setEndTime(rs.getString("endTime"));
+				sdule.setDay(rs.getString("day"));
 				sdules.add(sdule);
 			}
 		}catch (Exception e) {
@@ -209,7 +207,6 @@ public class ScheduleManager {
 						continue; //패스
 				}
 				//필터 3 끝
-				
 				results.add(empty); //결과값에 추가
 			}
 
