@@ -23,8 +23,7 @@ Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
    	 	String start = request.getParameter("start");
    	 	String end = request.getParameter("end");
 		int result = -2;
-		if (id != null && year != null && month != null && day != null && start != null && end != null) {
-			out.println(id);
+		if (id != "" && year != "" && month != "" && day != "" && start != "" && end != "") {
 			result = smanager.addSchedule(id, year, month, day, start, end);
 		} else {
 			PrintWriter script = response.getWriter();
@@ -41,7 +40,7 @@ Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 		} else if( result==-1){
 			PrintWriter script = response.getWriter(); 
 			script.println("<script>"); 
-			script.println("alert('DB오류')"); 
+			script.println("alert('일정 추가에 실패했습니다.')"); 
 			script.println("history.back()"); 
 			script.println("</script>"); 
 		}
