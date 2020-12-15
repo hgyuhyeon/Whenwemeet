@@ -1,0 +1,20 @@
+1. USER
+- userID(유저 아이디/ primary)
+- userPassword(비밀번호)
+- userName(이름)
+- userGender(성별)
+- userEmail(이메일)
+
+2. ROOMLIST
+- userID(유저 id)
+- roomID(방 링크 / primary)
+- roomName(방 이름)
+
+3. SCHEDULE
+- roomID(방 ID, 만들어진 링크 번호를 저장함)
+- totalDay(yyyymmdd 8자리)
+- year(연도)
+- month(월)
+- day(일)
+- startTime(시작시간)
+- endTime(종료시간)
