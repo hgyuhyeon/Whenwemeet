@@ -1,1 +1,4 @@
-When we'll meet? - Schedule Matching Program
+#  When WE Meet? - Schedule Matching Program
+*  여러 사용자가 만날 수 있는 시간을 추천하는 웹 서비스.
+*  방을 생성하고, 해당 방마다 사용자들이 각자의 일정을 입력할 수 있다.
+*  '빈 시간 추천' 기능으로 정해진 날짜 기간 내에 사용자 모두가 만날 수 있는 시간을 추천해준다.
